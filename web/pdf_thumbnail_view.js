@@ -136,7 +136,12 @@ class PDFThumbnailView {
     img.className = "thumbnailImage";
     this._placeholderImg = img;
 
+    const span = document.createElement("span");
+    span.className = "thumbnailNumber";
+    span.innerHTML = this.id;
+
     div.append(img);
+    div.append(span);
     anchor.append(div);
     container.append(anchor);
   }

@@ -31,7 +31,7 @@
   --editor-toolbar-base-offset: 105px;
 
   --main-color: rgb(12 12 13);
-  --body-bg-color: rgb(212 212 215);
+  --body-bg-color: rgb(234 246 244);
   --progressBar-color: rgb(10 132 255);
   --progressBar-bg-color: rgb(221 221 222);
   --progressBar-blend-color: rgb(116 177 239);
@@ -42,11 +42,11 @@
 
   --sidebar-narrow-bg-color: rgb(212 212 215 / 0.9);
   --sidebar-toolbar-bg-color: rgb(245 246 247);
-  --toolbar-bg-color: rgb(249 249 250);
+  --toolbar-bg-color: rgb(255 255 255);
   --toolbar-border-color: rgb(184 184 184);
   --toolbar-box-shadow: 0 1px 0 var(--toolbar-border-color);
   --toolbar-border-bottom: none;
-  --toolbar-height: 32px;
+  --toolbar-height: 50px;
   --toolbarSidebar-box-shadow: inset calc(-1px * var(--dir-factor)) 0 0
       rgb(0 0 0 / 0.25),
     0 1px 0 rgb(0 0 0 / 0.15), 0 0 1px rgb(0 0 0 / 0.1);
@@ -67,8 +67,9 @@
   --treeitem-hover-color: rgb(0 0 0 / 0.9);
   --treeitem-selected-color: rgb(0 0 0 / 0.9);
   --treeitem-selected-bg-color: rgb(0 0 0 / 0.25);
-  --thumbnail-hover-color: rgb(0 0 0 / 0.1);
-  --thumbnail-selected-color: rgb(0 0 0 / 0.2);
+  --thumbnail-hover-color: rgb(9 174 152);
+  --thumbnail-selected-color: rgb(34 55 72);
+  --thumbnail-text-color: rgb(255 255 255);
   --doorhanger-bg-color: rgb(255 255 255);
   --doorhanger-border-color: rgb(12 12 13 / 0.2);
   --doorhanger-hover-color: rgb(12 12 13);
@@ -282,12 +283,9 @@ body {
   font: message-box;
   border-top: 1px solid rgb(51 51 51);
   border-inline-end: var(--doorhanger-border-color-whcm);
-  transition-property: inset-inline-start;
-  transition-duration: var(--sidebar-transition-duration);
-  transition-timing-function: var(--sidebar-transition-timing-function);
 }
 
-#outerContainer:is(.sidebarMoving, .sidebarOpen) #sidebarContainer {
+#outerContainer:is(.sidebarOpen) #sidebarContainer {
   visibility: visible;
 }
 #outerContainer.sidebarOpen #sidebarContainer {
@@ -301,7 +299,7 @@ body {
 }
 
 #sidebarContent {
-  inset-block: var(--toolbar-height) 0;
+  inset-block: 0;
   inset-inline-start: 0;
   overflow: auto;
   position: absolute;
@@ -370,6 +368,7 @@ body {
 }
 
 #toolbarViewer {
+  position: relative;
   height: var(--toolbar-height);
 }
 
@@ -613,7 +612,8 @@ body {
 
 .splitToolbarButton {
   margin: 2px;
-  display: inline-block;
+  display: flex;
+  align-items: baseline;
 }
 .splitToolbarButton > .toolbarButton {
   float: var(--inline-start);
@@ -789,11 +789,11 @@ body {
 }
 
 #previous::before {
-  mask-image: var(--toolbarButton-pageUp-icon);
+  mask-image: var(--findbarButton-previous-icon);
 }
 
 #next::before {
-  mask-image: var(--toolbarButton-pageDown-icon);
+  mask-image: var(--findbarButton-next-icon);
 }
 
 #zoomOut::before {
@@ -906,7 +906,7 @@ body {
 
 #pageNumber {
   -moz-appearance: textfield; /* hides the spinner in moz */
-  text-align: end;
+  text-align: center;
   width: 40px;
   background-size: 0 0;
   transition-property: none;
@@ -996,12 +996,16 @@ body {
   --thumbnail-width: 0;
   --thumbnail-height: 0;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   float: var(--inline-start);
   width: var(--thumbnail-width);
   height: var(--thumbnail-height);
-  margin: 0 10px 5px;
+  margin: 0 10px 40px;
   padding: 1px;
-  border: 7px solid transparent;
+  border: 2px solid transparent;
   border-radius: 2px;
 }
 
@@ -1023,10 +1027,12 @@ a:focus > .thumbnail,
   opacity: 0.9;
 }
 a:focus > .thumbnail > .thumbnailImage,
-.thumbnail:hover > .thumbnailImage {
+.thumbnail:hover > .thumbnailImage,
+.thumbnail:hover > .thumbnailNumber {
   opacity: 0.95;
 }
-.thumbnail.selected > .thumbnailImage {
+.thumbnail:hover > .thumbnailImage,
+.thumbnail:hover > .thumbnailNumber {
   opacity: 1 !important;
 }
 
@@ -1034,6 +1040,17 @@ a:focus > .thumbnail > .thumbnailImage,
   width: calc(var(--thumbnail-width) - 2px);
   height: calc(var(--thumbnail-height) - 2px);
   border: 1px dashed rgb(132 132 132);
+}
+
+.thumbnailNumber {
+  padding: 1px 15px;
+  min-width: 10px;
+  background-color: var(--thumbnail-selected-color);
+  border: 1px solid var(--thumbnail-selected-color);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--thumbnail-text-color);
 }
 
 .treeWithDeepNesting > .treeItem,

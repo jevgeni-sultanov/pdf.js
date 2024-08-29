@@ -250,6 +250,8 @@ const PDFViewerApplication = {
       // when it's embedded in e.g. an <iframe> or an <object>.
       AppOptions.set("externalLinkTarget", LinkTarget.TOP);
     }
+
+    AppOptions.set("sidebarViewOnLoad", SidebarView.THUMBS);
     await this._initializeViewerComponents();
 
     // Bind the various event handlers *after* the viewer has been
@@ -3015,10 +3017,6 @@ function onKeyDown(evt) {
 
       case 82: // 'r'
         this.rotatePages(90);
-        break;
-
-      case 115: // F4
-        this.pdfSidebar?.toggle();
         break;
     }
 

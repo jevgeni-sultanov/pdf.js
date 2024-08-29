@@ -309,12 +309,6 @@ class Toolbar {
         opts.numPages.setAttribute("data-l10n-id", "pdfjs-page-of-pages");
       } else {
         opts.pageNumber.type = "number";
-
-        opts.numPages.setAttribute("data-l10n-id", "pdfjs-of-pages");
-        opts.numPages.setAttribute(
-          "data-l10n-args",
-          JSON.stringify({ pagesCount })
-        );
       }
       opts.pageNumber.max = pagesCount;
     }
