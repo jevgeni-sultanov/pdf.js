@@ -40,7 +40,9 @@ import {
  * @property {HTMLButtonElement} zoomOut - Button to zoom out the pages.
  * @property {HTMLButtonElement} editorFreeTextButton - Button to switch to
  *   FreeText editing.
+ * @property {HTMLButtonElement} print - Button to print the document.
  * @property {HTMLButtonElement} download - Button to download the document.
+ * @property {HTMLButtonElement} upload - Button to open a document.
  */
 
 class Toolbar {
@@ -65,6 +67,7 @@ class Toolbar {
       { element: options.zoomOut, eventName: "zoomout" },
       { element: options.print, eventName: "print" },
       { element: options.download, eventName: "download" },
+      { element: options.upload, eventName: "upload" },
       {
         element: options.editorFreeTextButton,
         eventName: "switchannotationeditormode",

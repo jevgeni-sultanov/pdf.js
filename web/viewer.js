@@ -68,6 +68,7 @@ function getViewerConfiguration() {
         "editorStampParamsToolbar"
       ),
       download: document.getElementById("download"),
+      upload: document.getElementById("upload"),
     },
     secondaryToolbar: {
       toolbar: document.getElementById("secondaryToolbar"),
@@ -105,7 +106,7 @@ function getViewerConfiguration() {
       // Divs (and sidebar button)
       outerContainer: document.getElementById("outerContainer"),
       sidebarContainer: document.getElementById("sidebarContainer"),
-      // toggleButton: document.getElementById("sidebarToggle"),
+      toggleButton: document.getElementById("sidebarToggle"),
       resizer: document.getElementById("sidebarResizer"),
       // Buttons
       thumbnailButton: document.getElementById("viewThumbnail"),

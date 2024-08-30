@@ -283,9 +283,12 @@ body {
   font: message-box;
   border-top: 1px solid rgb(51 51 51);
   border-inline-end: var(--doorhanger-border-color-whcm);
+  transition-property: inset-inline-start;
+  transition-duration: var(--sidebar-transition-duration);
+  transition-timing-function: var(--sidebar-transition-timing-function);
 }
 
-#outerContainer:is(.sidebarOpen) #sidebarContainer {
+#outerContainer:is(.sidebarMoving, .sidebarOpen) #sidebarContainer {
   visibility: visible;
 }
 #outerContainer.sidebarOpen #sidebarContainer {
@@ -342,6 +345,7 @@ body {
 }
 
 #toolbarSidebar {
+  visibility: hidden;
   width: 100%;
   height: var(--toolbar-height);
   background-color: var(--sidebar-toolbar-bg-color);
@@ -368,7 +372,8 @@ body {
 }
 
 #toolbarViewer {
-  position: relative;
+  display: flex;
+  align-items: center;
   height: var(--toolbar-height);
 }
 
@@ -828,6 +833,10 @@ body {
   mask-image: var(--toolbarButton-download-icon);
 }
 
+#upload::before {
+  mask-image: var(--toolbarButton-openFile-icon);
+}
+
 #viewThumbnail::before {
   mask-image: var(--toolbarButton-viewThumbnail-icon);
 }
@@ -1005,8 +1014,8 @@ body {
   height: var(--thumbnail-height);
   margin: 0 10px 40px;
   padding: 1px;
-  border: 2px solid transparent;
-  border-radius: 2px;
+  border: 3px solid transparent;
+  border-radius: 4px;
 }
 
 #thumbnailView > a:last-of-type > .thumbnail {

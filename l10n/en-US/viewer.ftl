@@ -45,6 +45,9 @@ pdfjs-print-button-label = Print
 pdfjs-save-button =
     .title = Save
 pdfjs-save-button-label = Save
+pdfjs-upload-button =
+    .title = Save
+pdfjs-upload-button-label = Save
 
 # Used in Firefox for Android as a tooltip for the download button (“download” is a verb).
 pdfjs-download-button =
