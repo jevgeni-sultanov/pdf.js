@@ -14,6 +14,7 @@
  */
 
 @import url(pdf_viewer.css);
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 :root {
   --dir-factor: 1;
@@ -26,7 +27,7 @@
   --sidebar-transition-duration: 200ms;
   --sidebar-transition-timing-function: ease;
 
-  --toolbar-icon-opacity: 0.7;
+  --toolbar-icon-opacity: 1;
   --doorhanger-icon-opacity: 0.9;
   --editor-toolbar-base-offset: 105px;
 
@@ -51,7 +52,9 @@
       rgb(0 0 0 / 0.25),
     0 1px 0 rgb(0 0 0 / 0.15), 0 0 1px rgb(0 0 0 / 0.1);
   --toolbarSidebar-border-bottom: none;
-  --button-hover-color: rgb(221 222 223);
+  --button-color: rgb(34 55 72);
+  --button-hover-color: rgb(9 174 152);
+  --button-hover-text-color: rgb(255 255 255);
   --toggled-btn-color: rgb(0 0 0);
   --toggled-btn-bg-color: rgb(0 0 0 / 0.3);
   --toggled-hover-active-btn-color: rgb(0 0 0 / 0.4);
@@ -373,6 +376,7 @@ body {
 
 #toolbarViewer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: var(--toolbar-height);
 }
@@ -581,12 +585,6 @@ body {
   margin-inline-end: -9px;
 }
 
-#toolbarViewerMiddle {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 #toolbarViewerLeft,
 #toolbarSidebarLeft {
   float: var(--inline-start);
@@ -655,6 +653,7 @@ body {
 .splitToolbarButton > .toolbarButton:is(:hover, :focus-visible),
 .dropdownToolbarButton:hover {
   background-color: var(--button-hover-color);
+  color: var(--button-hover-text-color);
 }
 .splitToolbarButton > .toolbarButton {
   position: relative;
@@ -690,6 +689,7 @@ body {
 
 .toolbarButton:is(:hover, :focus-visible) {
   background-color: var(--button-hover-color);
+  color: var(--button-hover-text-color);
 }
 
 .toolbarButton.toggled,
@@ -784,29 +784,12 @@ body {
 }
 
 #sidebarToggle::before {
-  mask-image: var(--toolbarButton-sidebarToggle-icon);
   transform: scaleX(var(--dir-factor));
 }
 
 #secondaryToolbarToggle::before {
   mask-image: var(--toolbarButton-secondaryToolbarToggle-icon);
   transform: scaleX(var(--dir-factor));
-}
-
-#previous::before {
-  mask-image: var(--findbarButton-previous-icon);
-}
-
-#next::before {
-  mask-image: var(--findbarButton-next-icon);
-}
-
-#zoomOut::before {
-  mask-image: var(--toolbarButton-zoomOut-icon);
-}
-
-#zoomIn::before {
-  mask-image: var(--toolbarButton-zoomIn-icon);
 }
 
 #editorFreeText::before {
@@ -823,18 +806,6 @@ body {
 
 #editorStamp::before {
   mask-image: var(--toolbarButton-editorStamp-icon);
-}
-
-#print::before {
-  mask-image: var(--toolbarButton-print-icon);
-}
-
-#download::before {
-  mask-image: var(--toolbarButton-download-icon);
-}
-
-#upload::before {
-  mask-image: var(--toolbarButton-openFile-icon);
 }
 
 #viewThumbnail::before {
@@ -861,6 +832,50 @@ body {
 
 #viewFind::before {
   mask-image: var(--toolbarButton-search-icon);
+}
+
+.icon {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font: var(--fa-font-solid) !important;
+}
+
+.icon::before {
+  background-color: transparent !important;
+  font-size: 28px;
+}
+
+.icon-sidebar::before {
+  content: "\f0c9";
+}
+
+.icon-left::before {
+  content: "\f053";
+}
+
+.icon-right::before {
+  content: "\f054";
+}
+
+.icon-zoom-out::before {
+  content: "\f010";
+}
+
+.icon-zoom-in::before {
+  content: "\f00e";
+}
+
+.icon-print::before {
+  content: "\f02f";
+}
+
+.icon-download::before {
+  content: "\f019";
+}
+
+.icon-upload::before {
+  content: "\f093";
 }
 
 .pdfSidebarNotification::after {
@@ -967,8 +982,8 @@ body {
   padding: 7px;
   margin: 2px;
   border-radius: 2px;
-  color: var(--main-color);
-  font-size: 12px;
+  color: black;
+  font: message-box;
   line-height: 14px;
   text-align: left;
   user-select: none;
@@ -1240,6 +1255,14 @@ dialog :link {
 }
 
 .toolbarButton {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: var(--button-color);
+  transition-property: background-color;
+  transition-duration: var(--sidebar-transition-duration);
+  transition-timing-function: var(--sidebar-transition-timing-function);
+
   &.labeled {
     border-radius: 0;
     display: inline-block;

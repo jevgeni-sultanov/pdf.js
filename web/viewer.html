@@ -333,21 +333,49 @@ See https://github.com/adobe-type-tools/cmap-resources
           <div id="toolbarContainer">
             <div id="toolbarViewer">
               <div id="toolbarViewerLeft">
-                <button id="sidebarToggle" class="toolbarButton" type="button" title="Toggle Sidebar" tabindex="11" data-l10n-id="pdfjs-toggle-sidebar-button" aria-expanded="false" aria-controls="sidebarContainer">
+                <button id="sidebarToggle" class="toolbarButton icon icon-sidebar" type="button" title="Toggle Sidebar" tabindex="11" data-l10n-id="pdfjs-toggle-sidebar-button" aria-expanded="false" aria-controls="sidebarContainer">
                   <span data-l10n-id="pdfjs-toggle-sidebar-button-label">Toggle Sidebar</span>
                 </button>
                 <div class="toolbarButtonSpacer"></div>
                 <div class="splitToolbarButton hiddenSmallView">
                   <span>Page</span>
-                  <button class="toolbarButton" title="Previous Page" id="previous" type="button" tabindex="13" data-l10n-id="pdfjs-previous-button">
+                  <button class="toolbarButton icon icon-left" title="Previous Page" id="previous" type="button" tabindex="13" data-l10n-id="pdfjs-previous-button">
                     <span data-l10n-id="pdfjs-previous-button-label">Previous</span>
                   </button>
                   <span class="loadingInput start">
                     <input type="number" id="pageNumber" class="toolbarField" title="Page" value="1" min="1" tabindex="15" data-l10n-id="pdfjs-page-input" autocomplete="off">
                   </span>
-                  <button class="toolbarButton" title="Next Page" id="next" type="button" tabindex="14" data-l10n-id="pdfjs-next-button">
+                  <button class="toolbarButton icon icon-right" title="Next Page" id="next" type="button" tabindex="14" data-l10n-id="pdfjs-next-button">
                     <span data-l10n-id="pdfjs-next-button-label">Next</span>
                   </button>
+                  <span id="numPages" class="toolbarLabel"></span>
+                </div>
+                <div>
+                  <div class="splitToolbarButton">
+                    <button id="zoomOut" class="toolbarButton icon icon-zoom-out" type="button" title="Zoom Out" tabindex="21" data-l10n-id="pdfjs-zoom-out-button">
+                      <span data-l10n-id="pdfjs-zoom-out-button-label">Zoom Out</span>
+                    </button>
+                    <button id="zoomIn" class="toolbarButton icon icon-zoom-in" type="button" title="Zoom In" tabindex="22" data-l10n-id="pdfjs-zoom-in-button">
+                      <span data-l10n-id="pdfjs-zoom-in-button-label">Zoom In</span>
+                    </button>
+                  </div>
+                  <span id="scaleSelectContainer" class="dropdownToolbarButton hidden">
+                  <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="pdfjs-zoom-select">
+                    <option id="pageAutoOption" title="" value="auto" selected="selected" data-l10n-id="pdfjs-page-scale-auto">Automatic Zoom</option>
+                    <option id="pageActualOption" title="" value="page-actual" data-l10n-id="pdfjs-page-scale-actual">Actual Size</option>
+                    <option id="pageFitOption" title="" value="page-fit" data-l10n-id="pdfjs-page-scale-fit">Page Fit</option>
+                    <option id="pageWidthOption" title="" value="page-width" data-l10n-id="pdfjs-page-scale-width">Page Width</option>
+                    <option id="customScaleOption" title="" value="custom" disabled="disabled" hidden="true" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 0 }'>0%</option>
+                    <option title="" value="0.5" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 50 }'>50%</option>
+                    <option title="" value="0.75" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 75 }'>75%</option>
+                    <option title="" value="1" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 100 }'>100%</option>
+                    <option title="" value="1.25" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 125 }'>125%</option>
+                    <option title="" value="1.5" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 150 }'>150%</option>
+                    <option title="" value="2" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 200 }'>200%</option>
+                    <option title="" value="3" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 300 }'>300%</option>
+                    <option title="" value="4" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 400 }'>400%</option>
+                  </select>
+                </span>
                 </div>
               </div>
               <div id="toolbarViewerRight">
@@ -366,51 +394,21 @@ See https://github.com/adobe-type-tools/cmap-resources
                   </button>
                 </div>
 
-                <div id="editorModeSeparator" class="verticalToolbarSeparator"></div>
-
-                <button id="print" class="toolbarButton hiddenMediumView" type="button" title="Print" tabindex="41" data-l10n-id="pdfjs-print-button">
+                <button id="print" class="toolbarButton hiddenMediumView icon icon-print" type="button" title="Print" tabindex="41" data-l10n-id="pdfjs-print-button">
                   <span data-l10n-id="pdfjs-print-button-label">Print</span>
                 </button>
 
-                <button id="download" class="toolbarButton hiddenMediumView" type="button" title="Save" tabindex="42" data-l10n-id="pdfjs-save-button">
+                <button id="download" class="toolbarButton hiddenMediumView icon icon-download" type="button" title="Save" tabindex="42" data-l10n-id="pdfjs-save-button">
                   <span data-l10n-id="pdfjs-save-button-label">Save</span>
                 </button>
 
-                <button id="upload" class="toolbarButton hiddenMediumView" type="button" title="Upload" data-l10n-id="pdfjs-upload-button">
+                <button id="upload" class="toolbarButton hiddenMediumView icon icon-upload" type="button" title="Upload" data-l10n-id="pdfjs-upload-button">
                   <span data-l10n-id="pdfjs-save-button-label">Upload</span>
                 </button>
 
                 <button id="secondaryToolbarToggle" class="toolbarButton hidden" type="button" title="Tools" tabindex="43" data-l10n-id="pdfjs-tools-button" aria-expanded="false" aria-controls="secondaryToolbar">
                   <span data-l10n-id="pdfjs-tools-button-label">Tools</span>
                 </button>
-              </div>
-              <div id="toolbarViewerMiddle">
-                <div class="splitToolbarButton">
-                  <button id="zoomOut" class="toolbarButton" type="button" title="Zoom Out" tabindex="21" data-l10n-id="pdfjs-zoom-out-button">
-                    <span data-l10n-id="pdfjs-zoom-out-button-label">Zoom Out</span>
-                  </button>
-                  <div class="splitToolbarButtonSeparator"></div>
-                  <button id="zoomIn" class="toolbarButton" type="button" title="Zoom In" tabindex="22" data-l10n-id="pdfjs-zoom-in-button">
-                    <span data-l10n-id="pdfjs-zoom-in-button-label">Zoom In</span>
-                   </button>
-                </div>
-                <span id="scaleSelectContainer" class="dropdownToolbarButton">
-                  <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="pdfjs-zoom-select">
-                    <option id="pageAutoOption" title="" value="auto" selected="selected" data-l10n-id="pdfjs-page-scale-auto">Automatic Zoom</option>
-                    <option id="pageActualOption" title="" value="page-actual" data-l10n-id="pdfjs-page-scale-actual">Actual Size</option>
-                    <option id="pageFitOption" title="" value="page-fit" data-l10n-id="pdfjs-page-scale-fit">Page Fit</option>
-                    <option id="pageWidthOption" title="" value="page-width" data-l10n-id="pdfjs-page-scale-width">Page Width</option>
-                    <option id="customScaleOption" title="" value="custom" disabled="disabled" hidden="true" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 0 }'>0%</option>
-                    <option title="" value="0.5" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 50 }'>50%</option>
-                    <option title="" value="0.75" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 75 }'>75%</option>
-                    <option title="" value="1" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 100 }'>100%</option>
-                    <option title="" value="1.25" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 125 }'>125%</option>
-                    <option title="" value="1.5" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 150 }'>150%</option>
-                    <option title="" value="2" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 200 }'>200%</option>
-                    <option title="" value="3" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 300 }'>300%</option>
-                    <option title="" value="4" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 400 }'>400%</option>
-                  </select>
-                </span>
               </div>
             </div>
             <div id="loadingBar">
