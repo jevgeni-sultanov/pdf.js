@@ -14,7 +14,6 @@
  */
 
 @import url(pdf_viewer.css);
-@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 :root {
   --dir-factor: 1;
@@ -55,6 +54,7 @@
   --button-color: rgb(34 55 72);
   --button-hover-color: rgb(9 174 152);
   --button-hover-text-color: rgb(255 255 255);
+  --button-group-color: rgb(34 55 72);
   --toggled-btn-color: rgb(0 0 0);
   --toggled-btn-bg-color: rgb(0 0 0 / 0.3);
   --toggled-hover-active-btn-color: rgb(0 0 0 / 0.4);
@@ -604,10 +604,10 @@ body {
 }
 
 #toolbarViewerLeft {
-  padding-inline-start: 1px;
+  padding-inline-start: 10px;
 }
 #toolbarViewerRight {
-  padding-inline-end: 1px;
+  padding-inline-end: 10px;
 }
 #toolbarSidebarRight {
   padding-inline-end: 2px;
@@ -616,10 +616,15 @@ body {
 .splitToolbarButton {
   margin: 2px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 .splitToolbarButton > .toolbarButton {
   float: var(--inline-start);
+}
+
+.toolbarButtonGroup {
+  display: flex;
+  align-items: center;
 }
 
 .toolbarButton,
@@ -835,6 +840,7 @@ body {
 }
 
 .icon {
+  position: relative;
   display: inline-block;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -843,7 +849,7 @@ body {
 
 .icon::before {
   background-color: transparent !important;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .icon-sidebar::before {
@@ -929,6 +935,9 @@ body {
 }
 
 #pageNumber {
+  border: 1px solid var(--button-group-color);
+  padding: 0;
+  margin: 0;
   -moz-appearance: textfield; /* hides the spinner in moz */
   text-align: center;
   width: 40px;
@@ -975,6 +984,10 @@ body {
 
 .toolbarField:focus {
   border-color: #0a84ff;
+}
+
+.toolbarTitle {
+  padding: 0 10px;
 }
 
 .toolbarLabel {
@@ -1255,8 +1268,8 @@ dialog :link {
 }
 
 .toolbarButton {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 33px;
   cursor: pointer;
   color: var(--button-color);
   transition-property: background-color;
