@@ -73,7 +73,6 @@ const TYPESTEST_DIR = BUILD_DIR + "typestest/";
 const COMMON_WEB_FILES = [
   "web/images/*.{png,svg,gif}",
   "web/debugger.{css,mjs}",
-  "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
 ];
 const MOZCENTRAL_DIFF_FILE = "mozcentral.diff";
 
@@ -618,13 +617,18 @@ function createCMapBundle() {
 }
 
 function createStandardFontBundle() {
-  return gulp.src([
-    "external/standard_fonts/*.pfb",
-    "external/standard_fonts/*.ttf",
-    "external/standard_fonts/LICENSE_FOXIT",
-    "external/standard_fonts/LICENSE_LIBERATION",
-    "node_modules/@fortawesome/fontawesome-free/webfonts/*",
-  ]);
+  return gulp.src(
+    [
+      "external/standard_fonts/*.pfb",
+      "external/standard_fonts/*.ttf",
+      "external/standard_fonts/LICENSE_FOXIT",
+      "external/standard_fonts/LICENSE_LIBERATION",
+    ],
+    {
+      base: "external/standard_fonts",
+      encoding: false,
+    }
+  );
 }
 
 function checkFile(filePath) {
