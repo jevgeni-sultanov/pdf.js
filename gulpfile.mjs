@@ -618,19 +618,13 @@ function createCMapBundle() {
 }
 
 function createStandardFontBundle() {
-  return gulp.src(
-    [
-      "external/standard_fonts/*.pfb",
-      "external/standard_fonts/*.ttf",
-      "external/standard_fonts/LICENSE_FOXIT",
-      "external/standard_fonts/LICENSE_LIBERATION",
-      "node_modules/@fortawesome/fontawesome-free/webfonts/*",
-    ],
-    {
-      base: "external/standard_fonts",
-      encoding: false,
-    }
-  );
+  return gulp.src([
+    "external/standard_fonts/*.pfb",
+    "external/standard_fonts/*.ttf",
+    "external/standard_fonts/LICENSE_FOXIT",
+    "external/standard_fonts/LICENSE_LIBERATION",
+    "node_modules/@fortawesome/fontawesome-free/webfonts/*",
+  ]);
 }
 
 function checkFile(filePath) {
