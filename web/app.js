@@ -745,6 +745,15 @@ const PDFViewerApplication = {
       appConfig.secondaryToolbar?.printButton.classList.add("hidden");
     }
 
+    if (!this.supportsDownloading) {
+      appConfig.toolbar?.download?.classList.add("hidden");
+      appConfig.secondaryToolbar?.downloadButton.classList.add("hidden");
+    }
+
+    if (!this.supportsUploading) {
+      appConfig.toolbar?.upload?.classList.add("hidden");
+    }
+
     if (!this.supportsFullscreen) {
       appConfig.secondaryToolbar?.presentationModeButton.classList.add(
         "hidden"
@@ -809,6 +818,40 @@ const PDFViewerApplication = {
     this.pdfViewer.currentScaleValue = DEFAULT_SCALE_VALUE;
   },
 
+  enablePrinting() {
+    this.toolbar.printing = true;
+    this.appConfig.toolbar?.print?.classList.remove("hidden");
+    this.appConfig.secondaryToolbar?.printButton.classList.remove("hidden");
+  },
+
+  disablePrinting() {
+    this.toolbar.printing = false;
+    this.appConfig.toolbar?.print?.classList.add("hidden");
+    this.appConfig.secondaryToolbar?.printButton.classList.add("hidden");
+  },
+
+  enableDownloading() {
+    this.toolbar.downloading = true;
+    this.appConfig.toolbar?.download?.classList.remove("hidden");
+    this.appConfig.secondaryToolbar?.downloadButton.classList.remove("hidden");
+  },
+
+  disableDownloading() {
+    this.toolbar.downloading = false;
+    this.appConfig.toolbar?.download?.classList.add("hidden");
+    this.appConfig.secondaryToolbar?.downloadButton.classList.add("hidden");
+  },
+
+  enableUploading() {
+    this.toolbar.uploading = true;
+    this.appConfig.toolbar?.upload?.classList.remove("hidden");
+  },
+
+  disableUploading() {
+    this.toolbar.uploading = false;
+    this.appConfig.toolbar?.upload?.classList.add("hidden");
+  },
+
   get pagesCount() {
     return this.pdfDocument ? this.pdfDocument.numPages : 0;
   },
@@ -822,7 +865,17 @@ const PDFViewerApplication = {
   },
 
   get supportsPrinting() {
-    return PDFPrintServiceFactory.supportsPrinting;
+    return (
+      PDFPrintServiceFactory.supportsPrinting && this.toolbar.printing === true
+    );
+  },
+
+  get supportsDownloading() {
+    return this.toolbar.downloading === true;
+  },
+
+  get supportsUploading() {
+    return this.toolbar.uploading === true;
   },
 
   get supportsFullscreen() {
@@ -1130,6 +1183,10 @@ const PDFViewerApplication = {
   },
 
   async downloadOrSave() {
+    if (!this.supportsDownloading) {
+      return;
+    }
+
     // In the Firefox case, this method MUST always trigger a download.
     // When the user is closing a modified and unsaved document, we display a
     // prompt asking for saving or not. In case they save, we must wait for
@@ -2241,7 +2298,7 @@ if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
 
   // eslint-disable-next-line no-var
   var onFileInputChange = function (evt) {
-    if (this.pdfViewer?.isInPresentationMode) {
+    if (this.pdfViewer?.isInPresentationMode || !this.supportsUploading) {
       return; // Opening a new PDF file isn't supported in Presentation Mode.
     }
     const file = evt.fileInput.files[0];

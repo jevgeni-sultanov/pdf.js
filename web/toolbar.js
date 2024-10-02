@@ -60,6 +60,10 @@ class Toolbar {
   constructor(options, eventBus, toolbarDensity = 0) {
     this.#opts = options;
     this.eventBus = eventBus;
+    this.printing = true;
+    this.downloading = true;
+    this.uploading = true;
+
     const buttons = [
       { element: options.previous, eventName: "previouspage" },
       { element: options.next, eventName: "nextpage" },
