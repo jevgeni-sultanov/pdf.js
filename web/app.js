@@ -818,6 +818,24 @@ const PDFViewerApplication = {
     this.pdfViewer.currentScaleValue = DEFAULT_SCALE_VALUE;
   },
 
+  setTheme(theme) {
+    let themeClass;
+
+    switch (theme) {
+      case "pdfapi":
+        themeClass = "is-pdfapi";
+        break;
+      case "dark":
+        themeClass = "is-dark";
+        break;
+      case "light":
+      default:
+        themeClass = "is-light";
+    }
+
+    document.documentElement.classList.add(themeClass);
+  },
+
   enablePrinting() {
     this.toolbar.printing = true;
     this.appConfig.toolbar?.print?.classList.remove("hidden");

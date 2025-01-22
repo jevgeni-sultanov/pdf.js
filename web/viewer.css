@@ -55,14 +55,14 @@
   --button-hover-color: rgb(9 174 152);
   --button-hover-text-color: rgb(255 255 255);
   --button-group-color: rgb(34 55 72);
-  --toggled-btn-color: rgb(0 0 0);
-  --toggled-btn-bg-color: rgb(0 0 0 / 0.3);
-  --toggled-hover-active-btn-color: rgb(0 0 0 / 0.4);
-  --toggled-hover-btn-outline: none;
+  --toggled-btn-color: var(--main-color);
+  --toggled-btn-bg-color: transparent;
+  --toggled-hover-active-btn-color: var(--button-hover-color);
+  --toggled-hover-btn-outline: var(--button-hover-color);
   --dropdown-btn-bg-color: rgb(215 215 219);
   --dropdown-btn-border: none;
   --separator-color: rgb(0 0 0 / 0.3);
-  --field-color: rgb(6 6 6);
+  --field-color: var(--main-color);
   --field-bg-color: rgb(255 255 255);
   --field-border-color: rgb(187 187 188);
   --treeitem-color: rgb(0 0 0 / 0.8);
@@ -89,6 +89,42 @@
   --inline-start: right;
   --inline-end: left;
   /*#endif*/
+}
+
+html.is-light {
+  --main-color: rgb(28 32 36);
+  --body-bg-color: rgb(250 250 250);
+  --toolbar-bg-color: rgb(226 230 233);
+  --toolbar-border-color: rgb(198 204 210);
+  --button-color: var(--main-color);
+  --button-hover-color: rgb(0 0 0 / 0.1);
+  --button-hover-text-color: var(--main-color);
+  --thumbnail-bg-color: transparent;
+  --thumbnail-hover-color: rgb(0 0 0 / 0.2);
+  --thumbnail-selected-color: var(--thumbnail-hover-color);
+  --thumbnail-text-color: var(--main-color);
+}
+
+html.is-dark {
+  --main-color: rgb(255 255 255);
+  --body-bg-color: rgb(28 32 36);
+  --toolbar-bg-color: rgb(45 51 57);
+  --toolbar-border-color: rgb(89 102 115);
+  --button-color: var(--main-color);
+  --button-hover-color: rgb(0 0 0 / 0.1);
+  --button-hover-text-color: var(--main-color);
+  --field-bg-color: var(--body-bg-color);
+  --thumbnail-bg-color: transparent;
+  --thumbnail-hover-color: rgb(255 255 255 / 0.4);
+  --thumbnail-selected-color: var(--thumbnail-hover-color);
+  --thumbnail-text-color: var(--main-color);
+}
+
+html.is-pdfapi {
+  --main-color: rgb(34 55 72);
+  --body-bg-color: rgb(234 246 244);
+  --button-color: var(--main-color);
+  --thumbnail-bg-color: var(--main-color);
 }
 
 @media screen and (forced-colors: active) {
@@ -191,6 +227,7 @@ body {
   inset-block: var(--toolbar-height) 0;
   inset-inline-start: calc(-1 * var(--sidebar-width));
   width: var(--sidebar-width);
+  min-width: calc(var(--sidebar-width) + 1px);
   visibility: hidden;
   z-index: 100;
   font: message-box;
@@ -220,7 +257,8 @@ body {
   overflow: auto;
   position: absolute;
   width: 100%;
-  box-shadow: inset calc(-1px * var(--dir-factor)) 0 0 rgb(0 0 0 / 0.25);
+  box-shadow: inset calc(-1px * var(--dir-factor)) 0 0
+    var(--toolbar-border-color);
 }
 
 #viewerContainer {
@@ -516,9 +554,11 @@ body {
 #toolbarViewerLeft {
   padding-inline-start: 10px;
 }
+
 #toolbarViewerRight {
   padding-inline-end: 10px;
 }
+
 #toolbarSidebarRight {
   padding-inline-end: 2px;
 }
@@ -528,6 +568,7 @@ body {
   display: flex;
   align-items: center;
 }
+
 .splitToolbarButton > .toolbarButton {
   float: var(--inline-start);
 }
@@ -570,10 +611,12 @@ body {
   background-color: var(--button-hover-color);
   color: var(--button-hover-text-color);
 }
+
 .splitToolbarButton > .toolbarButton {
   position: relative;
   margin: 0;
 }
+
 #toolbarSidebar .splitToolbarButton > .toolbarButton {
   margin-inline-end: 2px;
 }
@@ -616,6 +659,8 @@ body {
 .toolbarButton.toggled:hover,
 .splitToolbarButton.toggled > .toolbarButton.toggled:hover {
   outline: var(--toggled-hover-btn-outline) !important;
+  background-color: var(--toggled-hover-active-btn-color);
+  color: var(--button-hover-text-color);
 }
 
 .toolbarButton.toggled::before {
@@ -764,9 +809,11 @@ body {
 
 .icon-sidebar::before {
   content: "\f0c9";
+  font-size: 22px;
 }
 
 .icon-left::before {
+  margin-left: 2px;
   content: "\f053";
 }
 
@@ -846,7 +893,6 @@ body {
 
 #pageNumber {
   border: 1px solid var(--button-group-color);
-  padding: 0;
   margin: 0;
   -moz-appearance: textfield; /* hides the spinner in moz */
   text-align: center;
@@ -898,6 +944,7 @@ body {
 
 .toolbarTitle {
   padding: 0 10px;
+  color: var(--main-color);
 }
 
 .toolbarLabel {
@@ -905,7 +952,7 @@ body {
   padding: 7px;
   margin: 2px;
   border-radius: 2px;
-  color: black;
+  color: var(--main-color);
   font: message-box;
   line-height: 14px;
   text-align: left;
@@ -1178,7 +1225,7 @@ dialog :link {
 }
 
 .toolbarButton {
-  width: 30px;
+  width: 33px;
   height: 33px;
   cursor: pointer;
   color: var(--button-color);
