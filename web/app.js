@@ -50,10 +50,10 @@ import {
   InvalidPDFException,
   isDataScheme,
   isPdfFile,
-  MissingPDFException,
   PDFWorker,
+  ResponseException,
   shadow,
-  UnexpectedResponseException,
+  stopEvent,
   version,
 } from "pdfjs-lib";
 import { AppOptions, OptionKind } from "./app_options.js";
@@ -714,8 +714,7 @@ const PDFViewerApplication = {
           if (item.type === "application/pdf") {
             evt.dataTransfer.dropEffect =
               evt.dataTransfer.effectAllowed === "copy" ? "copy" : "move";
-            evt.preventDefault();
-            evt.stopPropagation();
+            stopEvent(evt);
             return;
           }
         }
@@ -724,8 +723,7 @@ const PDFViewerApplication = {
         if (evt.dataTransfer.files?.[0].type !== "application/pdf") {
           return;
         }
-        evt.preventDefault();
-        evt.stopPropagation();
+        stopEvent(evt);
         eventBus.dispatch("fileinputchange", {
           source: this,
           fileInput: evt.dataTransfer,
@@ -1146,10 +1144,10 @@ const PDFViewerApplication = {
         let key = "pdfjs-loading-error";
         if (reason instanceof InvalidPDFException) {
           key = "pdfjs-invalid-file-error";
-        } else if (reason instanceof MissingPDFException) {
-          key = "pdfjs-missing-file-error";
-        } else if (reason instanceof UnexpectedResponseException) {
-          key = "pdfjs-unexpected-response-error";
+        } else if (reason instanceof ResponseException) {
+          key = reason.missing
+            ? "pdfjs-missing-file-error"
+            : "pdfjs-unexpected-response-error";
         }
         return this._documentError(key, { message: reason.message }).then(
           () => {
