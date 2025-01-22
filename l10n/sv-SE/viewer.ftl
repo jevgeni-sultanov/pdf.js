@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Dokumentegenskaper…
 pdfjs-document-properties-file-name = Filnamn:
 pdfjs-document-properties-file-size = Filstorlek:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } kB ({ $b } byte)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } byte)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } kB ({ $size_b } byte)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Ämne:
 pdfjs-document-properties-keywords = Nyckelord:
 pdfjs-document-properties-creation-date = Skapades:
 pdfjs-document-properties-modification-date = Ändrades:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date } { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type }-annotering]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -329,6 +343,10 @@ pdfjs-editor-stamp-add-image-button-label = Lägg till bild
 pdfjs-editor-free-highlight-thickness-input = Tjocklek
 pdfjs-editor-free-highlight-thickness-title =
     .title = Ändra tjocklek när du markerar andra objekt än text
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Textredigerare
+    .default-content = Börja skriva…
 pdfjs-free-text =
     .aria-label = Textredigerare
 pdfjs-free-text-default-content = Börja skriva…
@@ -339,8 +357,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Alternativ text
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Redigera alternativ text
 pdfjs-editor-alt-text-edit-button-label = Redigera alternativ text
 pdfjs-editor-alt-text-dialog-label = Välj ett alternativ
 pdfjs-editor-alt-text-dialog-description = Alt text (alternativ text) hjälper till när människor inte kan se bilden eller när den inte laddas.
@@ -354,6 +373,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Märkt som dekorativ
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = Till exempel, "En ung man sätter sig vid ett bord för att äta en måltid"
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Alternativ text
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -366,6 +388,22 @@ pdfjs-editor-resizer-label-bottom-right = Nedre högra hörnet — ändra storle
 pdfjs-editor-resizer-label-bottom-middle = Nedre mitten — ändra storlek
 pdfjs-editor-resizer-label-bottom-left = Nedre vänstra hörnet — ändra storlek
 pdfjs-editor-resizer-label-middle-left = Mitten till vänster — ändra storlek
+pdfjs-editor-resizer-top-left =
+    .aria-label = Det övre vänstra hörnet — ändra storlek
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Överst i mitten — ändra storlek
+pdfjs-editor-resizer-top-right =
+    .aria-label = Det övre högra hörnet — ändra storlek
+pdfjs-editor-resizer-middle-right =
+    .aria-label = Mitten höger — ändra storlek
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Nedre högra hörnet — ändra storlek
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Nedre mitten — ändra storlek
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Nedre vänstra hörnet — ändra storlek
+pdfjs-editor-resizer-middle-left =
+    .aria-label = Mitten till vänster — ändra storlek
 
 ## Color picker
 
@@ -406,8 +444,6 @@ pdfjs-editor-new-alt-text-textarea =
 pdfjs-editor-new-alt-text-description = Kort beskrivning för personer som inte kan se bilden eller när bilden inte laddas.
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
 pdfjs-editor-new-alt-text-disclaimer1 = Denna alternativa text skapades automatiskt och kan vara felaktig.
-# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = Denna alternativa text skapades automatiskt.
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = Läs mer
 pdfjs-editor-new-alt-text-create-automatically-button-label = Skapa alternativ text automatiskt
 pdfjs-editor-new-alt-text-not-now-button = Inte nu
@@ -421,10 +457,16 @@ pdfjs-editor-new-alt-text-error-close-button = Stäng
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = Hämtar AI-modell med alternativ text ({ $downloadedSize } av { $totalSize } MB)
     .aria-valuetext = Hämtar AI-modell med alternativ text ({ $downloadedSize } av { $totalSize } MB)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Alternativ text tillagd
 pdfjs-editor-new-alt-text-added-button-label = Alternativ text tillagd
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Saknar alternativ text
 pdfjs-editor-new-alt-text-missing-button-label = Saknar alternativ text
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Granska alternativ text
 pdfjs-editor-new-alt-text-to-review-button-label = Granska alternativ text
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -451,3 +493,23 @@ pdfjs-editor-alt-text-settings-editor-title = Alternativ textredigerare
 pdfjs-editor-alt-text-settings-show-dialog-button-label = Visa alternativ textredigerare direkt när du lägger till en bild
 pdfjs-editor-alt-text-settings-show-dialog-description = Hjälper dig att se till att alla dina bilder har alternativ text.
 pdfjs-editor-alt-text-settings-close-button = Stäng
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Markering borttagen
+pdfjs-editor-undo-bar-message-freetext = Text borttagen
+pdfjs-editor-undo-bar-message-ink = Ritning borttagen
+pdfjs-editor-undo-bar-message-stamp = Bild borttagen
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } anteckning har tagits bort
+       *[other] { $count } anteckningar har tagits bort
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Ångra
+pdfjs-editor-undo-bar-undo-button-label = Ångra
+pdfjs-editor-undo-bar-close-button =
+    .title = Stäng
+pdfjs-editor-undo-bar-close-button-label = Stäng

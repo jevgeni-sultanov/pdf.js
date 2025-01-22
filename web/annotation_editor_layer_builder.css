@@ -66,19 +66,26 @@
   font-size: 0;
 }
 
-.textLayer.highlighting {
-  cursor: var(--editorFreeHighlight-editing-cursor);
-
-  &:not(.free) span {
-    cursor: var(--editorHighlight-editing-cursor);
-  }
-
-  &.free span {
+.textLayer {
+  &.highlighting {
     cursor: var(--editorFreeHighlight-editing-cursor);
+
+    &:not(.free) span {
+      cursor: var(--editorHighlight-editing-cursor);
+
+      &[role="img"] {
+        cursor: var(--editorFreeHighlight-editing-cursor);
+      }
+    }
+
+    &.free span {
+      cursor: var(--editorFreeHighlight-editing-cursor);
+    }
   }
 }
 
-#viewerContainer.pdfPresentationMode:fullscreen {
+#viewerContainer.pdfPresentationMode:fullscreen,
+.annotationEditorLayer.disabled {
   .noAltTextBadge {
     display: none !important;
   }
@@ -151,6 +158,10 @@
   cursor: var(--editorInk-editing-cursor);
 }
 
+.annotationEditorLayer .draw {
+  box-sizing: border-box;
+}
+
 .annotationEditorLayer :is(.freeTextEditor, .inkEditor, .stampEditor) {
   position: absolute;
   background: transparent;
@@ -163,10 +174,6 @@
 
   &.draggable.selectedEditor {
     cursor: move;
-  }
-
-  &.moving {
-    touch-action: none;
   }
 
   &.selectedEditor {
@@ -304,12 +311,17 @@
       gap: 0;
       height: 100%;
 
+      button {
+        padding: 0;
+      }
+
       .divider {
-        width: 1px;
+        width: 0;
         height: calc(
           2 * var(--editor-toolbar-padding) + var(--editor-toolbar-height)
         );
-        background-color: var(--editor-toolbar-border-color);
+        border-left: 1px solid var(--editor-toolbar-border-color);
+        border-right: none;
         display: inline-block;
         margin-inline: 2px;
       }
@@ -445,6 +457,7 @@
 
         .tooltip {
           display: none;
+          word-wrap: anywhere;
 
           &.show {
             --alt-text-tooltip-bg: #f0f0f4;
@@ -1222,18 +1235,9 @@
 }
 
 #highlightParamsToolbarContainer {
-  height: auto;
-  padding-inline: 10px;
-  padding-block: 10px 16px;
   gap: 16px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-
-  .editorParamsLabel {
-    width: fit-content;
-    inset-inline-start: 0;
-  }
+  padding-inline: 10px;
+  padding-block-end: 12px;
 
   .colorPicker {
     display: flex;
@@ -1257,6 +1261,7 @@
         align-items: center;
         background: none;
         flex: 0 0 auto;
+        padding: 0;
 
         .swatch {
           width: 24px;
@@ -1286,7 +1291,6 @@
     align-self: stretch;
 
     .editorParamsLabel {
-      width: 100%;
       height: auto;
       align-self: stretch;
     }

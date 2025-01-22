@@ -48,8 +48,6 @@ class FreeTextEditor extends AnnotationEditor {
 
   #fontSize;
 
-  #initialData = null;
-
   static _freeTextDefaultContent = "";
 
   static _internalPadding = 0;
@@ -141,9 +139,7 @@ class FreeTextEditor extends AnnotationEditor {
 
   /** @inheritdoc */
   static initialize(l10n, uiManager) {
-    AnnotationEditor.initialize(l10n, uiManager, {
-      strings: ["pdfjs-free-text-default-content"],
-    });
+    AnnotationEditor.initialize(l10n, uiManager);
     const style = getComputedStyle(document.documentElement);
 
     if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
@@ -367,13 +363,15 @@ class FreeTextEditor extends AnnotationEditor {
   }
 
   /** @inheritdoc */
-  onceAdded() {
+  onceAdded(focus) {
     if (this.width) {
       // The editor was created in using ctrl+c.
       return;
     }
     this.enableEditMode();
-    this.editorDiv.focus();
+    if (focus) {
+      this.editorDiv.focus();
+    }
     if (this._initialOptions?.isCentered) {
       this.center();
     }
@@ -403,8 +401,16 @@ class FreeTextEditor extends AnnotationEditor {
     // We don't use innerText because there are some bugs with line breaks.
     const buffer = [];
     this.editorDiv.normalize();
+    let prevChild = null;
     for (const child of this.editorDiv.childNodes) {
+      if (prevChild?.nodeType === Node.TEXT_NODE && child.nodeName === "BR") {
+        // It can happen if the user uses shift+enter to add a new line.
+        // If we don't skip it, we'll end up with an extra line (one for the
+        // text and one for the br element).
+        continue;
+      }
       buffer.push(FreeTextEditor.#getNodeContent(child));
+      prevChild = child;
     }
     return buffer.join("\n");
   }
@@ -557,12 +563,10 @@ class FreeTextEditor extends AnnotationEditor {
     this.editorDiv.className = "internal";
 
     this.editorDiv.setAttribute("id", this.#editorDivId);
-    this.editorDiv.setAttribute("data-l10n-id", "pdfjs-free-text");
+    this.editorDiv.setAttribute("data-l10n-id", "pdfjs-free-text2");
+    this.editorDiv.setAttribute("data-l10n-attrs", "default-content");
     this.enableEditing();
 
-    AnnotationEditor._l10nPromise
-      .get("pdfjs-free-text-default-content")
-      .then(msg => this.editorDiv?.setAttribute("default-content", msg));
     this.editorDiv.contentEditable = true;
 
     const { style } = this.editorDiv;
@@ -590,7 +594,7 @@ class FreeTextEditor extends AnnotationEditor {
 
         // position is the position of the first glyph in the annotation
         // and it's relative to its container.
-        const { position } = this.#initialData;
+        const { position } = this._initialData;
         let [tx, ty] = this.getInitialTranslation();
         [tx, ty] = this.pageTranslationToScreen(tx, ty);
         const [pageWidth, pageHeight] = this.pageDimensions;
@@ -764,7 +768,7 @@ class FreeTextEditor extends AnnotationEditor {
   }
 
   /** @inheritdoc */
-  static deserialize(data, parent, uiManager) {
+  static async deserialize(data, parent, uiManager) {
     let initialData = null;
     if (data instanceof FreeTextAnnotationElement) {
       const {
@@ -773,6 +777,7 @@ class FreeTextEditor extends AnnotationEditor {
           rect,
           rotation,
           id,
+          popupRef,
         },
         textContent,
         textPosition,
@@ -797,14 +802,15 @@ class FreeTextEditor extends AnnotationEditor {
         rotation,
         id,
         deleted: false,
+        popupRef,
       };
     }
-    const editor = super.deserialize(data, parent, uiManager);
+    const editor = await super.deserialize(data, parent, uiManager);
     editor.#fontSize = data.fontSize;
     editor.#color = Util.makeHexColor(...data.color);
     editor.#content = FreeTextEditor.#deserializeContent(data.value);
     editor.annotationElementId = data.id || null;
-    editor.#initialData = initialData;
+    editor._initialData = initialData;
 
     return editor;
   }
@@ -816,11 +822,7 @@ class FreeTextEditor extends AnnotationEditor {
     }
 
     if (this.deleted) {
-      return {
-        pageIndex: this.pageIndex,
-        id: this.annotationElementId,
-        deleted: true,
-      };
+      return this.serializeDeleted();
     }
 
     const padding = FreeTextEditor._internalPadding * this.parentScale;
@@ -858,7 +860,7 @@ class FreeTextEditor extends AnnotationEditor {
   }
 
   #hasElementChanged(serialized) {
-    const { value, fontSize, color, pageIndex } = this.#initialData;
+    const { value, fontSize, color, pageIndex } = this._initialData;
 
     return (
       this._hasBeenMoved ||

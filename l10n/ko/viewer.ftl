@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = 문서 속성…
 pdfjs-document-properties-file-name = 파일 이름:
 pdfjs-document-properties-file-size = 파일 크기:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } KB ({ $b } 바이트)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } 바이트)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b }바이트)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = 주제:
 pdfjs-document-properties-keywords = 키워드:
 pdfjs-document-properties-creation-date = 작성 날짜:
 pdfjs-document-properties-modification-date = 수정 날짜:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -267,6 +278,9 @@ pdfjs-annotation-date-string = { $date } { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type } 주석]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -321,6 +335,10 @@ pdfjs-editor-stamp-add-image-button-label = 이미지 추가
 pdfjs-editor-free-highlight-thickness-input = 두께
 pdfjs-editor-free-highlight-thickness-title =
     .title = 텍스트 이외의 항목을 강조 표시할 때 두께 변경
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = 텍스트 편집기
+    .default-content = 입력을 시작하세요…
 pdfjs-free-text =
     .aria-label = 텍스트 편집기
 pdfjs-free-text-default-content = 입력하세요…
@@ -331,8 +349,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = 대체 텍스트
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = 대체 텍스트 편집
 pdfjs-editor-alt-text-edit-button-label = 대체 텍스트 편집
 pdfjs-editor-alt-text-dialog-label = 옵션을 선택하세요
 pdfjs-editor-alt-text-dialog-description = 대체 텍스트는 사람들이 이미지를 볼 수 없거나 이미지가 로드되지 않을 때 도움이 됩니다.
@@ -346,6 +365,9 @@ pdfjs-editor-alt-text-decorative-tooltip = 장식용으로 표시됨
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = 예를 들어, “한 청년이 식탁에 앉아 식사를 하고 있습니다.”
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = 대체 텍스트
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -358,6 +380,22 @@ pdfjs-editor-resizer-label-bottom-right = 오른쪽 아래 - 크기 조정
 pdfjs-editor-resizer-label-bottom-middle = 가운데 아래 — 크기 조정
 pdfjs-editor-resizer-label-bottom-left = 왼쪽 아래 - 크기 조정
 pdfjs-editor-resizer-label-middle-left = 왼쪽 가운데 — 크기 조정
+pdfjs-editor-resizer-top-left =
+    .aria-label = 왼쪽 위 — 크기 조정
+pdfjs-editor-resizer-top-middle =
+    .aria-label = 가운데 위 - 크기 조정
+pdfjs-editor-resizer-top-right =
+    .aria-label = 오른쪽 위 — 크기 조정
+pdfjs-editor-resizer-middle-right =
+    .aria-label = 오른쪽 가운데 — 크기 조정
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = 오른쪽 아래 - 크기 조정
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = 가운데 아래 — 크기 조정
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = 왼쪽 아래 - 크기 조정
+pdfjs-editor-resizer-middle-left =
+    .aria-label = 왼쪽 가운데 — 크기 조정
 
 ## Color picker
 
@@ -398,8 +436,6 @@ pdfjs-editor-new-alt-text-textarea =
 pdfjs-editor-new-alt-text-description = 이미지가 보이지 않거나 이미지가 로딩되지 않는 경우를 위한 간단한 설명입니다.
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
 pdfjs-editor-new-alt-text-disclaimer1 = 이 대체 텍스트는 자동으로 생성되었으므로 정확하지 않을 수 있습니다.
-# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = 이 대체 텍스트는 자동으로 생성되었습니다.
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = 더 알아보기
 pdfjs-editor-new-alt-text-create-automatically-button-label = 자동으로 대체 텍스트 생성
 pdfjs-editor-new-alt-text-not-now-button = 나중에
@@ -413,10 +449,16 @@ pdfjs-editor-new-alt-text-error-close-button = 닫기
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = 대체 텍스트 AI 모델 다운로드 중 ({ $downloadedSize } / { $totalSize } MB)
     .aria-valuetext = 대체 텍스트 AI 모델 다운로드 중 ({ $downloadedSize } / { $totalSize } MB)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = 대체 텍스트 추가됨
 pdfjs-editor-new-alt-text-added-button-label = 대체 텍스트 추가됨
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = 대체 텍스트 누락
 pdfjs-editor-new-alt-text-missing-button-label = 대체 텍스트 누락
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = 대체 텍스트 검토
 pdfjs-editor-new-alt-text-to-review-button-label = 대체 텍스트 검토
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -443,3 +485,19 @@ pdfjs-editor-alt-text-settings-editor-title = 대체 텍스트 편집기
 pdfjs-editor-alt-text-settings-show-dialog-button-label = 이미지 추가 시 바로 대체 텍스트 편집기 표시
 pdfjs-editor-alt-text-settings-show-dialog-description = 모든 이미지에 대체 텍스트가 있는지 확인하는 데 도움이 됩니다.
 pdfjs-editor-alt-text-settings-close-button = 닫기
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = 강조 표시 제거됨
+pdfjs-editor-undo-bar-message-freetext = 텍스트 제거됨
+pdfjs-editor-undo-bar-message-ink = 그리기 제거됨
+pdfjs-editor-undo-bar-message-stamp = 이미지 제거됨
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple = 주석 { $count }개 제거됨
+pdfjs-editor-undo-bar-undo-button =
+    .title = 실행 취소
+pdfjs-editor-undo-bar-undo-button-label = 실행 취소
+pdfjs-editor-undo-bar-close-button =
+    .title = 닫기
+pdfjs-editor-undo-bar-close-button-label = 닫기

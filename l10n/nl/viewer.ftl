@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Documenteigenschappen…
 pdfjs-document-properties-file-name = Bestandsnaam:
 pdfjs-document-properties-file-size = Bestandsgrootte:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } KB ({ $b } bytes)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } bytes)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bytes)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Onderwerp:
 pdfjs-document-properties-keywords = Sleutelwoorden:
 pdfjs-document-properties-creation-date = Aanmaakdatum:
 pdfjs-document-properties-modification-date = Wijzigingsdatum:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date }, { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type }-aantekening]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -329,6 +343,10 @@ pdfjs-editor-stamp-add-image-button-label = Afbeelding toevoegen
 pdfjs-editor-free-highlight-thickness-input = Dikte
 pdfjs-editor-free-highlight-thickness-title =
     .title = Dikte wijzigen bij accentuering van andere items dan tekst
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Tekstbewerker
+    .default-content = Start met typen…
 pdfjs-free-text =
     .aria-label = Tekstbewerker
 pdfjs-free-text-default-content = Begin met typen…
@@ -339,8 +357,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Alternatieve tekst
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Alternatieve tekst bewerken
 pdfjs-editor-alt-text-edit-button-label = Alternatieve tekst bewerken
 pdfjs-editor-alt-text-dialog-label = Kies een optie
 pdfjs-editor-alt-text-dialog-description = Alternatieve tekst helpt wanneer mensen de afbeelding niet kunnen zien of wanneer deze niet wordt geladen.
@@ -354,6 +373,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Als decoratief gemarkeerd
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = Bijvoorbeeld: ‘Een jonge man gaat aan een tafel zitten om te eten’
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Alternatieve tekst
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -366,6 +388,22 @@ pdfjs-editor-resizer-label-bottom-right = Rechterbenedenhoek – formaat wijzige
 pdfjs-editor-resizer-label-bottom-middle = Midden onder – formaat wijzigen
 pdfjs-editor-resizer-label-bottom-left = Linkerbenedenhoek – formaat wijzigen
 pdfjs-editor-resizer-label-middle-left = Links midden – formaat wijzigen
+pdfjs-editor-resizer-top-left =
+    .aria-label = Linkerbovenhoek – formaat wijzigen
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Midden boven – formaat wijzigen
+pdfjs-editor-resizer-top-right =
+    .aria-label = Rechterbovenhoek – formaat wijzigen
+pdfjs-editor-resizer-middle-right =
+    .aria-label = Midden rechts – formaat wijzigen
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Rechterbenedenhoek – formaat wijzigen
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Midden onder – formaat wijzigen
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Linkerbenedenhoek – formaat wijzigen
+pdfjs-editor-resizer-middle-left =
+    .aria-label = Links midden – formaat wijzigen
 
 ## Color picker
 
@@ -405,7 +443,7 @@ pdfjs-editor-new-alt-text-textarea =
 # This text refers to the alt text box above this description. It offers a definition of alt text.
 pdfjs-editor-new-alt-text-description = Korte beschrijving voor mensen die de afbeelding niet kunnen zien of wanneer de afbeelding niet wordt geladen.
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = Deze alternatieve tekst is automatisch aangemaakt.
+pdfjs-editor-new-alt-text-disclaimer1 = Deze alternatieve tekst is automatisch gemaakt en is mogelijk onjuist.
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = Meer info
 pdfjs-editor-new-alt-text-create-automatically-button-label = Alternatieve tekst automatisch aanmaken
 pdfjs-editor-new-alt-text-not-now-button = Niet nu
@@ -419,10 +457,16 @@ pdfjs-editor-new-alt-text-error-close-button = Sluiten
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = AI-model voor alternatieve tekst downloaden ({ $downloadedSize } van { $totalSize } MB)
     .aria-valuetext = AI-model voor alternatieve tekst downloaden ({ $downloadedSize } van { $totalSize } MB)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Alternatieve tekst toegevoegd
 pdfjs-editor-new-alt-text-added-button-label = Alternatieve tekst toegevoegd
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Alternatieve tekst ontbreekt
 pdfjs-editor-new-alt-text-missing-button-label = Alternatieve tekst ontbreekt
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Alternatieve tekst beoordelen
 pdfjs-editor-new-alt-text-to-review-button-label = Alternatieve tekst beoordelen
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -449,3 +493,23 @@ pdfjs-editor-alt-text-settings-editor-title = Alternatieve-tekstbewerker
 pdfjs-editor-alt-text-settings-show-dialog-button-label = Alternatieve-tekstbewerker meteen tonen bij toevoegen van een afbeelding
 pdfjs-editor-alt-text-settings-show-dialog-description = Helpt u ervoor te zorgen dat al uw afbeeldingen alternatieve tekst hebben.
 pdfjs-editor-alt-text-settings-close-button = Sluiten
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Markering verwijderd
+pdfjs-editor-undo-bar-message-freetext = Tekst verwijderd
+pdfjs-editor-undo-bar-message-ink = Tekening verwijderd
+pdfjs-editor-undo-bar-message-stamp = Afbeelding verwijderd
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } annotatie verwijderd
+       *[other] { $count } annotaties verwijderd
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Ongedaan maken
+pdfjs-editor-undo-bar-undo-button-label = Ongedaan maken
+pdfjs-editor-undo-bar-close-button =
+    .title = Sluiten
+pdfjs-editor-undo-bar-close-button-label = Sluiten

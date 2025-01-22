@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Dokumentegenskaber…
 pdfjs-document-properties-file-name = Filnavn:
 pdfjs-document-properties-file-size = Filstørrelse:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } KB ({ $b } bytes)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } bytes)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bytes)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Emne:
 pdfjs-document-properties-keywords = Nøgleord:
 pdfjs-document-properties-creation-date = Oprettet:
 pdfjs-document-properties-modification-date = Redigeret:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -173,7 +184,7 @@ pdfjs-toggle-sidebar-notification-button =
     .title = Slå sidepanel til eller fra (dokumentet indeholder disposition/vedhæftede filer/lag)
 pdfjs-toggle-sidebar-button-label = Slå sidepanel til eller fra
 pdfjs-document-outline-button =
-    .title = Vis dokumentets disposition (dobbeltklik for at vise/skjule alle elementer)
+    .title = Vis dokumentets disposition (dobbeltklik for at udvide/sammenfolde alle elementer)
 pdfjs-document-outline-button-label = Dokument-disposition
 pdfjs-attachments-button =
     .title = Vis vedhæftede filer
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date }, { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type }kommentar]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -329,6 +343,10 @@ pdfjs-editor-stamp-add-image-button-label = Tilføj billede
 pdfjs-editor-free-highlight-thickness-input = Tykkelse
 pdfjs-editor-free-highlight-thickness-title =
     .title = Ændr tykkelse, når andre elementer end tekst fremhæves
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Teksteditor
+    .default-content = Begynd at skrive…
 pdfjs-free-text =
     .aria-label = Teksteditor
 pdfjs-free-text-default-content = Begynd at skrive…
@@ -339,8 +357,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Alternativ tekst
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Rediger alternativ tekst
 pdfjs-editor-alt-text-edit-button-label = Rediger alternativ tekst
 pdfjs-editor-alt-text-dialog-label = Vælg en indstilling
 pdfjs-editor-alt-text-dialog-description = Alternativ tekst hjælper folk, som ikke kan se billedet eller når det ikke indlæses.
@@ -354,6 +373,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Markeret som dekorativ
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = For eksempel: "En ung mand sætter sig ved et bord for at spise et måltid mad"
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Alternativ tekst
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -366,6 +388,22 @@ pdfjs-editor-resizer-label-bottom-right = Nederste højre hjørne - tilpas stør
 pdfjs-editor-resizer-label-bottom-middle = Nederst i midten - tilpas størrelse
 pdfjs-editor-resizer-label-bottom-left = Nederste venstre hjørne - tilpas størrelse
 pdfjs-editor-resizer-label-middle-left = Midten til venstre — tilpas størrelse
+pdfjs-editor-resizer-top-left =
+    .aria-label = Øverste venstre hjørne — tilpas størrelse
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Øverste i midten — tilpas størrelse
+pdfjs-editor-resizer-top-right =
+    .aria-label = Øverste højre hjørne — tilpas størrelse
+pdfjs-editor-resizer-middle-right =
+    .aria-label = Midten til højre — tilpas størrelse
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Nederste højre hjørne - tilpas størrelse
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Nederst i midten - tilpas størrelse
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Nederste venstre hjørne - tilpas størrelse
+pdfjs-editor-resizer-middle-left =
+    .aria-label = Midten til venstre — tilpas størrelse
 
 ## Color picker
 
@@ -419,10 +457,16 @@ pdfjs-editor-new-alt-text-error-close-button = Luk
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = Henter alternativ tekst AI-model ({ $downloadedSize } af { $totalSize } MB)
     .aria-valuetext = Henter alternativ tekst AI-model ({ $downloadedSize } af { $totalSize } MB)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Alternativ tekst tilføjet
 pdfjs-editor-new-alt-text-added-button-label = Alternativ tekst tilføjet
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Mangler alternativ tekst
 pdfjs-editor-new-alt-text-missing-button-label = Mangler alternativ tekst
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Gennemgå alternativ tekst
 pdfjs-editor-new-alt-text-to-review-button-label = Gennemgå alternativ tekst
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -449,3 +493,23 @@ pdfjs-editor-alt-text-settings-editor-title = Redigering af alternativ tekst
 pdfjs-editor-alt-text-settings-show-dialog-button-label = Vis redigering af alternativ tekst med det samme, når et billede tilføjes
 pdfjs-editor-alt-text-settings-show-dialog-description = Hjælper dig med at sikre, at alle dine billeder har alternativ tekst.
 pdfjs-editor-alt-text-settings-close-button = Luk
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Fremhævning fjernet
+pdfjs-editor-undo-bar-message-freetext = Tekst fjernet
+pdfjs-editor-undo-bar-message-ink = Tegning fjernet
+pdfjs-editor-undo-bar-message-stamp = Billede fjernet
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } kommentar fjernet
+       *[other] { $count } kommentarer fjernet
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Fortryd
+pdfjs-editor-undo-bar-undo-button-label = Fortryd
+pdfjs-editor-undo-bar-close-button =
+    .title = Luk
+pdfjs-editor-undo-bar-close-button-label = Luk

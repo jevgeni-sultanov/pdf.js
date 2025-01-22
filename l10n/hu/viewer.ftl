@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Dokumentum tulajdonságai…
 pdfjs-document-properties-file-name = Fájlnév:
 pdfjs-document-properties-file-size = Fájlméret:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } kB ({ $b } bájt)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } bájt)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bájt)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Tárgy:
 pdfjs-document-properties-keywords = Kulcsszavak:
 pdfjs-document-properties-creation-date = Létrehozás dátuma:
 pdfjs-document-properties-modification-date = Módosítás dátuma:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date }, { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type } megjegyzés]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -329,6 +343,10 @@ pdfjs-editor-stamp-add-image-button-label = Kép hozzáadása
 pdfjs-editor-free-highlight-thickness-input = Vastagság
 pdfjs-editor-free-highlight-thickness-title =
     .title = Vastagság módosítása, ha nem szöveges elemeket emel ki
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Szövegszerkesztő
+    .default-content = Kezdjen gépelni…
 pdfjs-free-text =
     .aria-label = Szövegszerkesztő
 pdfjs-free-text-default-content = Kezdjen el gépelni…
@@ -339,8 +357,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Alternatív szöveg
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Alternatív szöveg szerkesztése
 pdfjs-editor-alt-text-edit-button-label = Alternatív szöveg szerkesztése
 pdfjs-editor-alt-text-dialog-label = Válasszon egy lehetőséget
 pdfjs-editor-alt-text-dialog-description = Az alternatív szöveg segít, ha az emberek nem látják a képet, vagy ha az nem töltődik be.
@@ -354,6 +373,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Megjelölve dekoratívként
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = Például: „Egy fiatal férfi leül enni egy asztalhoz”
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Alternatív szöveg
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -366,6 +388,22 @@ pdfjs-editor-resizer-label-bottom-right = Jobb alsó sarok – átméretezés
 pdfjs-editor-resizer-label-bottom-middle = Alul középen – átméretezés
 pdfjs-editor-resizer-label-bottom-left = Bal alsó sarok – átméretezés
 pdfjs-editor-resizer-label-middle-left = Balra középen – átméretezés
+pdfjs-editor-resizer-top-left =
+    .aria-label = Bal felső sarok – átméretezés
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Felül középen – átméretezés
+pdfjs-editor-resizer-top-right =
+    .aria-label = Jobb felső sarok – átméretezés
+pdfjs-editor-resizer-middle-right =
+    .aria-label = Jobbra középen – átméretezés
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Jobb alsó sarok – átméretezés
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Alul középen – átméretezés
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Bal alsó sarok – átméretezés
+pdfjs-editor-resizer-middle-left =
+    .aria-label = Balra középen – átméretezés
 
 ## Color picker
 
@@ -406,8 +444,6 @@ pdfjs-editor-new-alt-text-textarea =
 pdfjs-editor-new-alt-text-description = Rövid leírás azoknak, akik nem látják a képet, vagy arra az esetre, ha a kép nem tölt be.
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
 pdfjs-editor-new-alt-text-disclaimer1 = Ez az alternatív szöveg automatikusan lett létrehozva, és pontatlan lehet.
-# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = Ez az alternatív szöveg automatikusan lett létrehozva.
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = További tudnivalók
 pdfjs-editor-new-alt-text-create-automatically-button-label = Alternatív szöveg automatikus létrehozása
 pdfjs-editor-new-alt-text-not-now-button = Most nem
@@ -421,10 +457,16 @@ pdfjs-editor-new-alt-text-error-close-button = Bezárás
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = Alternatív szöveg MI modell letöltése ({ $downloadedSize } / { $totalSize } MB)
     .aria-valuetext = Alternatív szöveg MI modell letöltése ({ $downloadedSize } / { $totalSize } MB)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Alternatív szöveg hozzáadva
 pdfjs-editor-new-alt-text-added-button-label = Alternatív szöveg hozzáadva
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Hiányzó alternatív szöveg
 pdfjs-editor-new-alt-text-missing-button-label = Hiányzó alternatív szöveg
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Alternatív szöveg áttekintése
 pdfjs-editor-new-alt-text-to-review-button-label = Alternatív szöveg szerkesztése
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -451,3 +493,23 @@ pdfjs-editor-alt-text-settings-editor-title = Alternatív szöveg szerkesztője
 pdfjs-editor-alt-text-settings-show-dialog-button-label = Az alternatív szöveg szerkesztőjének azonnali megjelenítése egy kép hozzáadásakor
 pdfjs-editor-alt-text-settings-show-dialog-description = Segít elérni, hogy az összes képén legyen alternatív szöveg.
 pdfjs-editor-alt-text-settings-close-button = Bezárás
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Kiemelés eltávolítva
+pdfjs-editor-undo-bar-message-freetext = Szöveg eltávolítva
+pdfjs-editor-undo-bar-message-ink = Rajz eltávolítva
+pdfjs-editor-undo-bar-message-stamp = Kép eltávolítva
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } kommentár eltávolítva
+       *[other] { $count } kommentár eltávolítva
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Visszavonás
+pdfjs-editor-undo-bar-undo-button-label = Visszavonás
+pdfjs-editor-undo-bar-close-button =
+    .title = Bezárás
+pdfjs-editor-undo-bar-close-button-label = Bezárás

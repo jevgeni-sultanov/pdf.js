@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Свойства документа…
 pdfjs-document-properties-file-name = Имя файла:
 pdfjs-document-properties-file-size = Размер файла:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } КБ ({ $b } байт)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } МБ ({ $b } байт)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } КБ ({ $size_b } байт)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Тема:
 pdfjs-document-properties-keywords = Ключевые слова:
 pdfjs-document-properties-creation-date = Дата создания:
 pdfjs-document-properties-modification-date = Дата изменения:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -277,6 +288,9 @@ pdfjs-annotation-date-string = { $date }, { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [Аннотация { $type }]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -331,6 +345,10 @@ pdfjs-editor-stamp-add-image-button-label = Добавить изображен�
 pdfjs-editor-free-highlight-thickness-input = Толщина
 pdfjs-editor-free-highlight-thickness-title =
     .title = Изменить толщину при выделении элементов, кроме текста
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Текстовый редактор
+    .default-content = Начните ввод...
 pdfjs-free-text =
     .aria-label = Текстовый редактор
 pdfjs-free-text-default-content = Начните вводить…
@@ -341,8 +359,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Альтернативный текст
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Изменить альтернативный текст
 pdfjs-editor-alt-text-edit-button-label = Изменить альтернативный текст
 pdfjs-editor-alt-text-dialog-label = Выберите вариант
 pdfjs-editor-alt-text-dialog-description = Альтернативный текст помогает, когда люди не видят изображение или оно не загружается.
@@ -356,6 +375,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Помечен как декорат�
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = Например: «Молодой человек садится за стол, чтобы поесть»
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Альтернативный текст
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -368,6 +390,22 @@ pdfjs-editor-resizer-label-bottom-right = Нижний правый угол —
 pdfjs-editor-resizer-label-bottom-middle = Внизу посередине — изменить размер
 pdfjs-editor-resizer-label-bottom-left = Нижний левый угол — изменить размер
 pdfjs-editor-resizer-label-middle-left = В центре слева — изменить размер
+pdfjs-editor-resizer-top-left =
+    .aria-label = Левый верхний угол — изменить размер
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Вверху посередине — изменить размер
+pdfjs-editor-resizer-top-right =
+    .aria-label = Верхний правый угол — изменить размер
+pdfjs-editor-resizer-middle-right =
+    .aria-label = В центре справа — изменить размер
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Нижний правый угол — изменить размер
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Внизу посередине — изменить размер
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Нижний левый угол — изменить размер
+pdfjs-editor-resizer-middle-left =
+    .aria-label = В центре слева — изменить размер
 
 ## Color picker
 
@@ -408,8 +446,6 @@ pdfjs-editor-new-alt-text-textarea =
 pdfjs-editor-new-alt-text-description = Короткое описание для людей, которые не видят изображение, или если изображение не загружается.
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
 pdfjs-editor-new-alt-text-disclaimer1 = Этот альтернативный текст был создан автоматически и может быть неточным.
-# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = Этот альтернативный текст был создан автоматически.
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = Подробнее
 pdfjs-editor-new-alt-text-create-automatically-button-label = Автоматически создавать альтернативный текст
 pdfjs-editor-new-alt-text-not-now-button = Не сейчас
@@ -423,11 +459,17 @@ pdfjs-editor-new-alt-text-error-close-button = Закрыть
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = Загрузка модели ИИ для альтернативного текста ({ $downloadedSize } из { $totalSize } МБ)
     .aria-valuetext = Загрузка модели ИИ для альтернативного текста ({ $downloadedSize } из { $totalSize } МБ)
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Альтернативный текст добавлен
 pdfjs-editor-new-alt-text-added-button-label = Альтернативный текст добавлен
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Отсутствует альтернативный текст
 pdfjs-editor-new-alt-text-missing-button-label = Отсутствует альтернативный текст
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
-pdfjs-editor-new-alt-text-to-review-button-label = Отзыв на альтернативный текст
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Оценить альтернативный текст
+pdfjs-editor-new-alt-text-to-review-button-label = Оценить альтернативный текст
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
 #   $generatedAltText (String) - the generated alt-text.
@@ -453,3 +495,24 @@ pdfjs-editor-alt-text-settings-editor-title = Редактор альтерна�
 pdfjs-editor-alt-text-settings-show-dialog-button-label = Сразу показывать редактор альтернативного текста при добавлении изображения
 pdfjs-editor-alt-text-settings-show-dialog-description = Помогает вам убедиться, что все ваши изображения имеют альтернативный текст.
 pdfjs-editor-alt-text-settings-close-button = Закрыть
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Выделение удалено
+pdfjs-editor-undo-bar-message-freetext = Текст удалён
+pdfjs-editor-undo-bar-message-ink = Рисунок удалён
+pdfjs-editor-undo-bar-message-stamp = Изображение удалено
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } аннотация удалена
+        [few] { $count } аннотации удалены
+       *[many] { $count } аннотаций удалены
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Отменить
+pdfjs-editor-undo-bar-undo-button-label = Отменить
+pdfjs-editor-undo-bar-close-button =
+    .title = Закрыть
+pdfjs-editor-undo-bar-close-button-label = Закрыть

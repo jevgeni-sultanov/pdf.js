@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = …ਦਸਤਾਵੇਜ਼ ਦੀ ਵਿ�
 pdfjs-document-properties-file-name = ਫਾਈਲ ਦਾ ਨਾਂ:
 pdfjs-document-properties-file-size = ਫਾਈਲ ਦਾ ਆਕਾਰ:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } KB ({ $b } ਬਾਈਟ)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } ਬਾਈਟ)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } ਬਾਈਟ)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = ਵਿਸ਼ਾ:
 pdfjs-document-properties-keywords = ਸ਼ਬਦ:
 pdfjs-document-properties-creation-date = ਬਣਾਉਣ ਦੀ ਮਿਤੀ:
 pdfjs-document-properties-modification-date = ਸੋਧ ਦੀ ਮਿਤੀ:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date }, { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type } ਵਿਆਖਿਆ]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -329,6 +343,10 @@ pdfjs-editor-stamp-add-image-button-label = ਚਿੱਤਰ ਜੋੜੋ
 pdfjs-editor-free-highlight-thickness-input = ਮੋਟਾਈ
 pdfjs-editor-free-highlight-thickness-title =
     .title = ਚੀਜ਼ਾਂ ਨੂੰ ਹੋਰ ਲਿਖਤਾਂ ਤੋਂ ਉਘਾੜਨ ਸਮੇਂ ਮੋਟਾਈ ਨੂੰ ਬਦਲੋ
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = ਲਿਖਤ ਐਡੀਟਰ
+    .default-content = …ਲਿਖਣਾ ਸ਼ੁਰੂ ਕਰੋ
 pdfjs-free-text =
     .aria-label = ਲਿਖਤ ਐਡੀਟਰ
 pdfjs-free-text-default-content = …ਲਿਖਣਾ ਸ਼ੁਰੂ ਕਰੋ
@@ -339,8 +357,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = ਬਦਲਵੀਂ ਲਿਖਤ
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = ਬਦਲਵੀ ਲਿਖਤ ਨੂੰ ਸੋਧੋ
 pdfjs-editor-alt-text-edit-button-label = ਬਦਲਵੀ ਲਿਖਤ ਨੂੰ ਸੋਧੋ
 pdfjs-editor-alt-text-dialog-label = ਚੋਣ ਕਰੋ
 pdfjs-editor-alt-text-dialog-description = ਚਿੱਤਰ ਨਾ ਦਿੱਸਣ ਜਾਂ ਲੋਡ ਨਾ ਹੋਣ ਦੀ ਹਾਲਤ ਵਿੱਚ Alt ਲਿਖਤ (ਬਦਲਵੀਂ ਲਿਖਤ) ਲੋਕਾਂ ਲਈ ਮਦਦਗਾਰ ਹੁੰਦੀ ਹੈ।
@@ -354,6 +373,9 @@ pdfjs-editor-alt-text-decorative-tooltip = ਸਜਾਵਟ ਵਜੋਂ ਨਿ�
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = ਮਿਸਾਲ ਵਜੋਂ, “ਗੱਭਰੂ ਭੋਜਨ ਲੈ ਕੇ ਮੇਜ਼ ਉੱਤੇ ਬੈਠਾ ਹੈ”
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = ਬਦਲਵੀਂ ਲਿਖਤ
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -366,6 +388,22 @@ pdfjs-editor-resizer-label-bottom-right = ਹੇਠਾਂ ਸੱਜਾ ਕੋਨ
 pdfjs-editor-resizer-label-bottom-middle = ਹੇਠਾਂ ਮੱਧ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
 pdfjs-editor-resizer-label-bottom-left = ਹੇਠਾਂ ਖੱਬਾ ਕੋਨਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
 pdfjs-editor-resizer-label-middle-left = ਮੱਧ ਖੱਬਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-top-left =
+    .aria-label = ਉੱਤੇ ਖੱਬਾ ਕੋਨਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-top-middle =
+    .aria-label = ਉੱਤੇ ਮੱਧ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-top-right =
+    .aria-label = ਉੱਤੇ ਸੱਜਾ ਕੋਨਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-middle-right =
+    .aria-label = ਮੱਧ ਸੱਜਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = ਹੇਠਾਂ ਸੱਜਾ ਕੋਨਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = ਹੇਠਾਂ ਮੱਧ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = ਹੇਠਾਂ ਖੱਬਾ ਕੋਨਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
+pdfjs-editor-resizer-middle-left =
+    .aria-label = ਮੱਧ ਖੱਬਾ — ਮੁੜ-ਆਕਾਰ ਕਰੋ
 
 ## Color picker
 
@@ -406,8 +444,6 @@ pdfjs-editor-new-alt-text-textarea =
 pdfjs-editor-new-alt-text-description = ਲੋਕ, ਜੋ ਕਿ ਚਿੱਤਰ ਨਹੀਂ ਵੇਖ ਸਕਦੇ ਜਾਂ ਜਦ ਵੀ ਚਿੱਤਰਾਂ ਨੂੰ ਲੋਡ ਨਹੀਂ ਜਾ ਸਕਦਾ, ਉਸ ਲਈ ਛੋਟਾ ਵੇਰਵਾ ਦਿਓ।
 # This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
 pdfjs-editor-new-alt-text-disclaimer1 = ਇਹ ਬਦਲਵੀਂ ਲਿਖਤ ਆਪਣੇ-ਆਪ ਤਿਆਰ ਕੀਤੀ ਗਈ ਸੀ ਅਤੇ ਗਲਤ ਵੀ ਹੋ ਸਕਦੀ ਹੈ।
-# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
-pdfjs-editor-new-alt-text-disclaimer = ਇਹ ਬਦਲਵੀ ਲਿਖਤ ਆਪਣੇ-ਆਪ ਤਿਆਰ ਕੀਤੀ ਗਈ ਸੀ।
 pdfjs-editor-new-alt-text-disclaimer-learn-more-url = ਹੋਰ ਜਾਣੋ
 pdfjs-editor-new-alt-text-create-automatically-button-label = ਬਲਦਵੀਂ ਲਿਖਤ ਆਪਣੇ-ਆਪ ਬਣਾਓ
 pdfjs-editor-new-alt-text-not-now-button = ਹੁਣੇ ਨਹੀਂ
@@ -421,10 +457,16 @@ pdfjs-editor-new-alt-text-error-close-button = ਬੰਦ ਕਰੋ
 pdfjs-editor-new-alt-text-ai-model-downloading-progress = ਬਦਲਵਾਂ ਲਿਖਤ AI ਮਾਡਲ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ ({ $totalSize } MB ਵਿੱਚੋਂ { $downloadedSize })
     .aria-valuetext = ਬਦਲਵਾਂ ਲਿਖਤ AI ਮਾਡਲ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ ({ $totalSize } MB ਵਿੱਚੋਂ { $downloadedSize })
 # This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = ਬਦਲਵੀਂ ਲਿਖਤ ਜੋੜੀ
 pdfjs-editor-new-alt-text-added-button-label = ਬਦਲਵੀਂ ਲਿਖਤ ਜੋੜੀ
 # This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = ਬਦਲਵਾਂ ਲਿਖਤ ਗੁੰਮ ਹੈ
 pdfjs-editor-new-alt-text-missing-button-label = ਬਦਲਵਾਂ ਲਿਖਤ ਗੁੰਮ ਹੈ
 # This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = ਬਦਲਵੀਂ ਲਿਖਤ ਦਾ ਰੀਵਿਊ ਕਰੋ
 pdfjs-editor-new-alt-text-to-review-button-label = ਬਦਲਵੀਂ ਲਿਖਤ ਦਾ ਰੀਵਿਊ ਕਰੋ
 # "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
 # Variables:
@@ -451,3 +493,23 @@ pdfjs-editor-alt-text-settings-editor-title = ਬਦਲਵੀਂ ਲਿਖਤ �
 pdfjs-editor-alt-text-settings-show-dialog-button-label = ਜਦੋਂ ਵਿੱਚ ਚਿੱਤਰ ਜੋੜਿਆ ਜਾਵੇ ਤਾਂ ਫ਼ੌਰਨ ਬਦਲਵੀ ਲਿਖਤ ਸੰਪਾਦਕ ਵੇਖਾਓ
 pdfjs-editor-alt-text-settings-show-dialog-description = ਤੁਹਾਡੀ ਮਦਦ ਕਰਦਾ ਹੈ ਕਿ ਤੁਹਾਡੇ ਸਾਰੇ ਚਿੱਤਰਾਂ ਲਈ ਬਦਲਵੀਂ ਲਿਖਤ ਮੌਜੂਦ ਹੋਵੇ।
 pdfjs-editor-alt-text-settings-close-button = ਬੰਦ ਕਰੋ
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = ਹਾਈਲਾਈਟ ਨੂੰ ਹਟਾਇਆ ਗਿਆ
+pdfjs-editor-undo-bar-message-freetext = ਲਿਖਤ ਨੂੰ ਹਟਾਇਆ ਗਿਆ
+pdfjs-editor-undo-bar-message-ink = ਡਰਾਇੰਗ ਨੂੰ ਹਟਾਇਆ ਗਿਆ
+pdfjs-editor-undo-bar-message-stamp = ਚਿੱਤਰ ਨੂੰ ਹਟਾਇਆ ਗਿਆ
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } ਵਿਆਖਿਆ ਨੂੰ ਹਟਾਇਆ
+       *[other] { $count } ਵਿਆਖਿਆਵਾਂ ਨੂੰ ਹਟਾਇਆ
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = ਵਾਪਸ
+pdfjs-editor-undo-bar-undo-button-label = ਵਾਪਸ
+pdfjs-editor-undo-bar-close-button =
+    .title = ਬੰਦ ਕਰੋ
+pdfjs-editor-undo-bar-close-button-label = ਬੰਦ ਕਰੋ
