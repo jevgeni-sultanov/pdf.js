@@ -31,7 +31,7 @@
   --editor-toolbar-base-offset: 105px;
 
   --main-color: rgb(12 12 13);
-  --body-bg-color: rgb(234 246 244);
+  --body-bg-color: rgb(255 255 255);
   --progressBar-color: rgb(10 132 255);
   --progressBar-bg-color: rgb(221 221 222);
   --progressBar-blend-color: rgb(116 177 239);
@@ -56,7 +56,7 @@
   --button-hover-text-color: rgb(255 255 255);
   --button-group-color: rgb(34 55 72);
   --toggled-btn-color: var(--main-color);
-  --toggled-btn-bg-color: transparent;
+  --toggled-btn-bg-color: var(--button-hover-color);
   --toggled-hover-active-btn-color: var(--button-hover-color);
   --toggled-hover-btn-outline: var(--button-hover-color);
   --dropdown-btn-bg-color: rgb(215 215 219);
@@ -802,6 +802,10 @@ body {
   font: var(--fa-font-solid) !important;
 }
 
+.icon.toggled {
+  background-color: var(--button-hover-color);
+}
+
 .icon::before {
   background-color: transparent !important;
   font-size: 20px;
@@ -827,6 +831,10 @@ body {
 
 .icon-zoom-in::before {
   content: "\f00e";
+}
+
+.icon-search::before {
+  content: "\f002";
 }
 
 .icon-print::before {
@@ -892,7 +900,7 @@ body {
 }
 
 #pageNumber {
-  border: 1px solid var(--button-group-color);
+  border: 1px solid var(--toolbar-border-color);
   margin: 0;
   -moz-appearance: textfield; /* hides the spinner in moz */
   text-align: center;
@@ -905,41 +913,10 @@ body {
     -webkit-appearance: none;
   }
   /*#endif*/
-
-  .loadingInput:has(> &.loading)::after {
-    display: block;
-    visibility: visible;
-
-    transition-property: visibility;
-    transition-delay: var(--loading-icon-delay);
-  }
-}
-
-.loadingInput {
-  &::after {
-    position: absolute;
-    visibility: hidden;
-    display: none;
-    top: calc(50% - 8px);
-    width: 16px;
-    height: 16px;
-
-    content: "";
-    background-color: var(--toolbar-icon-bg-color);
-    mask-size: cover;
-    mask-image: var(--loading-icon);
-  }
-
-  &.start::after {
-    inset-inline-start: 4px;
-  }
-  &.end::after {
-    inset-inline-end: 4px;
-  }
 }
 
 .toolbarField:focus {
-  border-color: #0a84ff;
+  border-color: var(--toolbar-border-color);
 }
 
 .toolbarTitle {
@@ -1387,12 +1364,14 @@ dialog :link {
 }
 
 #findbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: var(--toolbar-bg-color);
   cursor: default;
   font: message-box;
   font-size: 12px;
-  height: auto;
-  inset-inline-start: 64px;
+  height: max-content;
   line-height: 14px;
   margin: 4px 2px;
   min-width: 300px;
@@ -1400,15 +1379,12 @@ dialog :link {
   position: absolute;
   text-align: left;
   top: var(--toolbar-height);
+  left: 5px;
   z-index: 30000;
 
   * {
     float: var(--inline-start);
     position: relative;
-  }
-
-  > div {
-    height: var(--toolbar-height);
   }
 
   :is(button, input) {
@@ -1428,7 +1404,11 @@ dialog :link {
   }
 
   label {
+    width: max-content;
     user-select: none;
+    transition-property: background-color;
+    transition-duration: var(--sidebar-transition-duration);
+    transition-timing-function: var(--sidebar-transition-timing-function);
   }
 
   :is(label:hover, input:focus-visible + label) {
@@ -1437,6 +1417,8 @@ dialog :link {
   }
 
   #findbarInputContainer {
+    display: flex;
+    align-items: center;
     margin-inline-end: 4px;
 
     #findInput {
@@ -1450,11 +1432,6 @@ dialog :link {
 
       &::placeholder {
         font-style: normal;
-      }
-
-      .loadingInput:has(> &[data-status="pending"])::after {
-        display: block;
-        visibility: visible;
       }
 
       &[data-status="notFound"] {
@@ -1471,7 +1448,16 @@ dialog :link {
     }
   }
 
+  #findbarOptionsOneContainer,
+  #findbarOptionsTwoContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   #findbarMessageContainer {
+    width: max-content;
+
     #findResultsCount {
       background-color: rgb(217 217 217);
       color: rgb(82 82 82);
@@ -1481,6 +1467,8 @@ dialog :link {
     }
 
     #findMsg {
+      width: max-content;
+
       &[data-status="notFound"] {
         font-weight: bold;
       }
@@ -1505,9 +1493,9 @@ dialog :link {
     }
   }
 
-  @media all and (max-width: 690px) {
+  @media all and (max-width: 1250px) {
     & {
-      inset-inline-start: 34px;
+      flex-direction: column;
     }
   }
 }

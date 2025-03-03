@@ -70,40 +70,6 @@ See https://github.com/adobe-type-tools/cmap-resources
       </div>  <!-- sidebarContainer -->
 
       <div id="mainContainer">
-        <div class="findbar hidden doorHanger" id="findbar">
-          <div id="findbarInputContainer">
-            <span class="loadingInput end">
-              <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="pdfjs-find-input" aria-invalid="false">
-            </span>
-            <div class="splitToolbarButton">
-              <button id="findPrevious" class="toolbarButton" type="button" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="pdfjs-find-previous-button">
-                <span data-l10n-id="pdfjs-find-previous-button-label">Previous</span>
-              </button>
-              <div class="splitToolbarButtonSeparator"></div>
-              <button id="findNext" class="toolbarButton" type="button" title="Find the next occurrence of the phrase" tabindex="93" data-l10n-id="pdfjs-find-next-button">
-                <span data-l10n-id="pdfjs-find-next-button-label">Next</span>
-              </button>
-            </div>
-          </div>
-
-          <div id="findbarOptionsOneContainer">
-            <input type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="94">
-            <label for="findHighlightAll" class="toolbarLabel" data-l10n-id="pdfjs-find-highlight-checkbox">Highlight All</label>
-            <input type="checkbox" id="findMatchCase" class="toolbarField" tabindex="95">
-            <label for="findMatchCase" class="toolbarLabel" data-l10n-id="pdfjs-find-match-case-checkbox-label">Match Case</label>
-          </div>
-          <div id="findbarOptionsTwoContainer">
-            <input type="checkbox" id="findMatchDiacritics" class="toolbarField" tabindex="96">
-            <label for="findMatchDiacritics" class="toolbarLabel" data-l10n-id="pdfjs-find-match-diacritics-checkbox-label">Match Diacritics</label>
-            <input type="checkbox" id="findEntireWord" class="toolbarField" tabindex="97">
-            <label for="findEntireWord" class="toolbarLabel" data-l10n-id="pdfjs-find-entire-word-checkbox-label">Whole Words</label>
-          </div>
-
-          <div id="findbarMessageContainer" aria-live="polite">
-            <span id="findResultsCount" class="toolbarLabel"></span>
-            <span id="findMsg" class="toolbarLabel"></span>
-          </div>
-        </div>  <!-- findbar -->
 
         <div class="editorParamsToolbar hidden doorHangerRight" id="editorHighlightParamsToolbar">
           <div id="highlightParamsToolbarContainer" class="editorParamsToolbarContainer">
@@ -287,6 +253,45 @@ See https://github.com/adobe-type-tools/cmap-resources
                   </div>
                   <span id="numPages" class="toolbarLabel"></span>
                 </div>
+
+                <div class="toolbarButtonGroup">
+                  <button id="viewFind" class="toolbarButton icon icon-search" type="button" title="Find in Document" data-l10n-id="pdfjs-findbar-button" aria-expanded="false" aria-controls="findbar">
+                    <span data-l10n-id="pdfjs-findbar-button-label">Find</span>
+                  </button>
+                  <div class="findbar hidden doorHanger" id="findbar">
+                    <div id="findbarInputContainer">
+                      <span>
+                        <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="pdfjs-find-input" aria-invalid="false">
+                      </span>
+                      <div class="splitToolbarButton">
+                        <button id="findPrevious" class="toolbarButton icon icon-left" type="button" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="pdfjs-find-previous-button">
+                          <span data-l10n-id="pdfjs-find-previous-button-label">Previous</span>
+                        </button>
+                        <div class="splitToolbarButtonSeparator"></div>
+                        <button id="findNext" class="toolbarButton icon icon-right" type="button" title="Find the next occurrence of the phrase" tabindex="93" data-l10n-id="pdfjs-find-next-button">
+                          <span data-l10n-id="pdfjs-find-next-button-label">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div id="findbarOptionsOneContainer">
+                      <input type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="94">
+                      <label for="findHighlightAll" class="toolbarLabel" data-l10n-id="pdfjs-find-highlight-checkbox">Highlight All</label>
+                      <input type="checkbox" id="findMatchCase" class="toolbarField" tabindex="95">
+                      <label for="findMatchCase" class="toolbarLabel" data-l10n-id="pdfjs-find-match-case-checkbox-label">Match Case</label>
+                    </div>
+                    <div id="findbarOptionsTwoContainer">
+                      <input type="checkbox" id="findMatchDiacritics" class="toolbarField" tabindex="96">
+                      <label for="findMatchDiacritics" class="toolbarLabel" data-l10n-id="pdfjs-find-match-diacritics-checkbox-label">Match Diacritics</label>
+                      <input type="checkbox" id="findEntireWord" class="toolbarField" tabindex="97">
+                      <label for="findEntireWord" class="toolbarLabel" data-l10n-id="pdfjs-find-entire-word-checkbox-label">Whole Words</label>
+                    </div>
+                    <div id="findbarMessageContainer" aria-live="polite">
+                      <span id="findResultsCount" class="toolbarLabel"></span>
+                      <span id="findMsg" class="toolbarLabel"></span>
+                    </div>
+                  </div>  <!-- findbar -->
+                </div>
+
                 <div>
                   <div class="splitToolbarButton">
                     <button id="zoomOut" class="toolbarButton icon icon-zoom-out" type="button" title="Zoom Out" tabindex="21" data-l10n-id="pdfjs-zoom-out-button">

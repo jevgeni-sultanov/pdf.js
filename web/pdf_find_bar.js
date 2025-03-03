@@ -25,11 +25,9 @@ const MATCHES_COUNT_LIMIT = 1000;
  * is done by PDFFindController.
  */
 class PDFFindBar {
-  #mainContainer;
-
   #resizeObserver = new ResizeObserver(this.#resizeObserverCallback.bind(this));
 
-  constructor(options, mainContainer, eventBus) {
+  constructor(options, eventBus) {
     this.opened = false;
 
     this.bar = options.bar;
@@ -44,7 +42,6 @@ class PDFFindBar {
     this.findPreviousButton = options.findPreviousButton;
     this.findNextButton = options.findNextButton;
     this.eventBus = eventBus;
-    this.#mainContainer = mainContainer;
 
     const checkedInputs = new Map([
       [this.highlightAll, "highlightallchange"],
@@ -172,7 +169,7 @@ class PDFFindBar {
       //  - The width of the viewer itself changes.
       //  - The width of the findbar changes, by toggling the visibility
       //    (or localization) of find count/status messages.
-      this.#resizeObserver.observe(this.#mainContainer);
+      this.#resizeObserver.observe(this.bar.parentNode);
       this.#resizeObserver.observe(this.bar);
 
       this.opened = true;
