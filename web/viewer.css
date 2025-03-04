@@ -31,6 +31,7 @@
   --editor-toolbar-base-offset: 105px;
 
   --main-color: rgb(12 12 13);
+  --main-font-size: 14px;
   --body-bg-color: rgb(255 255 255);
   --progressBar-color: rgb(10 132 255);
   --progressBar-bg-color: rgb(221 221 222);
@@ -241,8 +242,13 @@ body {
 #outerContainer:is(.sidebarMoving, .sidebarOpen) #sidebarContainer {
   visibility: visible;
 }
+
 #outerContainer.sidebarOpen #sidebarContainer {
   inset-inline-start: 0;
+}
+
+#outerContainer:not(.sidebarOpen) #toolbarViewerMiddle {
+  transform: translateX(calc(-0.5 * var(--sidebar-width)));
 }
 
 #mainContainer {
@@ -533,15 +539,6 @@ body {
   margin-inline-end: -9px;
 }
 
-#toolbarViewerLeft,
-#toolbarSidebarLeft {
-  float: var(--inline-start);
-}
-#toolbarViewerRight,
-#toolbarSidebarRight {
-  float: var(--inline-end);
-}
-
 #toolbarViewerLeft > *,
 #toolbarViewerMiddle > *,
 #toolbarViewerRight > *,
@@ -553,6 +550,22 @@ body {
 
 #toolbarViewerLeft {
   padding-inline-start: 10px;
+}
+
+#toolbarViewerMiddle {
+  display: flex;
+  align-items: center;
+
+  #scaleSelect {
+    background-color: var(--field-bg-color);
+    border: 1px solid var(--field-border-color);
+    border-radius: 2px;
+    font-size: var(--main-font-size);
+
+    option {
+      font-size: var(--main-font-size);
+    }
+  }
 }
 
 #toolbarViewerRight {
@@ -630,7 +643,6 @@ body {
 }
 
 .toolbarButton,
-.dropdownToolbarButton,
 .dialogButton {
   min-width: 16px;
   margin: 2px 1px;
@@ -673,18 +685,19 @@ body {
 }
 
 .dropdownToolbarButton {
-  display: flex;
-  width: fit-content;
-  min-width: 140px;
-  padding: 0;
-  background-color: var(--dropdown-btn-bg-color);
-  border: var(--dropdown-btn-border);
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font:var(--fa-font-solid);
 }
-.dropdownToolbarButton::after {
-  top: 6px;
-  inset-inline-end: 6px;
+
+.dropdownToolbarButton::before {
+  background-color: transparent;
   pointer-events: none;
-  mask-image: var(--toolbarButton-menuArrow-icon);
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  content: "\f078";
 }
 
 .dropdownToolbarButton > select {
@@ -715,8 +728,7 @@ body {
   height: 1px;
 }
 
-:is(.toolbarButton, .treeItemToggler)::before,
-.dropdownToolbarButton::after {
+:is(.toolbarButton, .treeItemToggler)::before {
   /* All matching images have a size of 16x16
    * All relevant containers have a size of 28x28 */
   position: absolute;
@@ -725,12 +737,7 @@ body {
   height: 16px;
 
   content: "";
-  background-color: var(--toolbar-icon-bg-color);
   mask-size: cover;
-}
-
-.dropdownToolbarButton:is(:hover, :focus-visible, :active)::after {
-  background-color: var(--toolbar-icon-hover-bg-color);
 }
 
 .toolbarButton::before {
@@ -748,50 +755,15 @@ body {
 }
 
 #secondaryToolbarToggle::before {
-  mask-image: var(--toolbarButton-secondaryToolbarToggle-icon);
   transform: scaleX(var(--dir-factor));
-}
-
-#editorFreeText::before {
-  mask-image: var(--toolbarButton-editorFreeText-icon);
-}
-
-#editorHighlight::before {
-  mask-image: var(--toolbarButton-editorHighlight-icon);
-}
-
-#editorInk::before {
-  mask-image: var(--toolbarButton-editorInk-icon);
-}
-
-#editorStamp::before {
-  mask-image: var(--toolbarButton-editorStamp-icon);
-}
-
-#viewThumbnail::before {
-  mask-image: var(--toolbarButton-viewThumbnail-icon);
 }
 
 #viewOutline::before {
-  mask-image: var(--toolbarButton-viewOutline-icon);
   transform: scaleX(var(--dir-factor));
-}
-
-#viewAttachments::before {
-  mask-image: var(--toolbarButton-viewAttachments-icon);
-}
-
-#viewLayers::before {
-  mask-image: var(--toolbarButton-viewLayers-icon);
 }
 
 #currentOutlineItem::before {
-  mask-image: var(--toolbarButton-currentOutlineItem-icon);
   transform: scaleX(var(--dir-factor));
-}
-
-#viewFind::before {
-  mask-image: var(--toolbarButton-search-icon);
 }
 
 .icon {
@@ -826,11 +798,11 @@ body {
 }
 
 .icon-zoom-out::before {
-  content: "\f010";
+  content: "\f068";
 }
 
 .icon-zoom-in::before {
-  content: "\f00e";
+  content: "\2b";
 }
 
 .icon-search::before {
@@ -1562,16 +1534,6 @@ dialog :link {
   display: none !important;
 }
 
-@media all and (max-width: 900px) {
-  #toolbarViewerMiddle {
-    display: table;
-    margin: auto;
-    left: auto;
-    position: inherit;
-    transform: none;
-  }
-}
-
 @media all and (max-width: 840px) {
   #sidebarContainer {
     background-color: var(--sidebar-narrow-bg-color);
@@ -1590,6 +1552,9 @@ dialog :link {
   }
   #outerContainer .visibleMediumView {
     display: inherit !important;
+  }
+  #outerContainer:not(.sidebarOpen) #toolbarViewerMiddle {
+    transform: translateX(0);
   }
 }
 
