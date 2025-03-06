@@ -1469,12 +1469,21 @@ dialog :link {
   display: none !important;
 }
 
+@media all and (max-width: 900px){
+  #outerContainer:not(.sidebarOpen) #toolbarViewerMiddle {
+    transform: none;
+  }
+}
+
 @media all and (max-width: 840px) {
   #sidebarContainer {
     background-color: var(--sidebar-narrow-bg-color);
   }
   #outerContainer.sidebarOpen #viewerContainer {
     inset-inline-start: 0 !important;
+  }
+  .splitToolbarButton {
+    display: none;
   }
 }
 
