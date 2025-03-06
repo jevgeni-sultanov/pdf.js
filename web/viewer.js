@@ -73,34 +73,28 @@ function getViewerConfiguration() {
     secondaryToolbar: {
       toolbar: document.getElementById("secondaryToolbar"),
       toggleButton: document.getElementById("secondaryToolbarToggle"),
-      presentationModeButton: document.getElementById("presentationMode"),
-      openFileButton:
-        typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")
-          ? document.getElementById("secondaryOpenFile")
-          : null,
+      presentationModeButton: null,
+      openFileButton: null,
       printButton: document.getElementById("secondaryPrint"),
       downloadButton: document.getElementById("secondaryDownload"),
-      viewBookmarkButton: document.getElementById("viewBookmark"),
-      firstPageButton: document.getElementById("firstPage"),
-      lastPageButton: document.getElementById("lastPage"),
-      pageRotateCwButton: document.getElementById("pageRotateCw"),
-      pageRotateCcwButton: document.getElementById("pageRotateCcw"),
-      cursorSelectToolButton: document.getElementById("cursorSelectTool"),
-      cursorHandToolButton: document.getElementById("cursorHandTool"),
-      scrollPageButton: document.getElementById("scrollPage"),
-      scrollVerticalButton: document.getElementById("scrollVertical"),
-      scrollHorizontalButton: document.getElementById("scrollHorizontal"),
-      scrollWrappedButton: document.getElementById("scrollWrapped"),
-      spreadNoneButton: document.getElementById("spreadNone"),
-      spreadOddButton: document.getElementById("spreadOdd"),
-      spreadEvenButton: document.getElementById("spreadEven"),
-      imageAltTextSettingsButton: document.getElementById(
-        "imageAltTextSettings"
-      ),
-      imageAltTextSettingsSeparator: document.getElementById(
-        "imageAltTextSettingsSeparator"
-      ),
-      documentPropertiesButton: document.getElementById("documentProperties"),
+      uploadButton: document.getElementById("secondaryUpload"),
+      viewBookmarkButton: null,
+      firstPageButton: null,
+      lastPageButton: null,
+      pageRotateCwButton: null,
+      pageRotateCcwButton: null,
+      cursorSelectToolButton: null,
+      cursorHandToolButton: null,
+      scrollPageButton: null,
+      scrollVerticalButton: null,
+      scrollHorizontalButton: null,
+      scrollWrappedButton: null,
+      spreadNoneButton: null,
+      spreadOddButton: null,
+      spreadEvenButton: null,
+      imageAltTextSettingsButton: null,
+      imageAltTextSettingsSeparator: null,
+      documentPropertiesButton: null,
     },
     sidebar: {
       // Divs (and sidebar button)

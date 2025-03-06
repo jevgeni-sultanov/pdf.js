@@ -738,6 +738,10 @@ const PDFViewerApplication = {
       });
     }
 
+    if (!this.supportsTextSearch) {
+      appConfig.findBar = undefined;
+    }
+
     if (!this.supportsPrinting) {
       appConfig.toolbar?.print?.classList.add("hidden");
       appConfig.secondaryToolbar?.printButton.classList.add("hidden");
@@ -753,7 +757,7 @@ const PDFViewerApplication = {
     }
 
     if (!this.supportsFullscreen) {
-      appConfig.secondaryToolbar?.presentationModeButton.classList.add(
+      appConfig.secondaryToolbar?.presentationModeButton?.classList.add(
         "hidden"
       );
     }
@@ -834,6 +838,32 @@ const PDFViewerApplication = {
     document.documentElement.classList.add(themeClass);
   },
 
+  setInitialScale(scaleValue) {
+    this.pdfViewer.currentScaleValue = scaleValue;
+  },
+
+  showScaleDropdown() {
+    this.appConfig.toolbar?.scaleSelect?.classList.remove("hidden");
+    this.appConfig.toolbar?.scaleSelect?.parentElement.classList.remove(
+      "hidden"
+    );
+  },
+
+  hideScaleDropdown() {
+    this.appConfig.toolbar?.scaleSelect?.classList.add("hidden");
+    this.appConfig.toolbar?.scaleSelect?.parentElement.classList.add("hidden");
+  },
+
+  enableTextSearch() {
+    this.toolbar.textSearch = true;
+    this.findBar.toggleButton?.classList.remove("hidden");
+  },
+
+  disableTextSearch() {
+    this.toolbar.textSearch = false;
+    this.findBar.toggleButton?.classList.add("hidden");
+  },
+
   enablePrinting() {
     this.toolbar.printing = true;
     this.appConfig.toolbar?.print?.classList.remove("hidden");
@@ -878,6 +908,10 @@ const PDFViewerApplication = {
 
   set page(val) {
     this.pdfViewer.currentPageNumber = val;
+  },
+
+  get supportsTextSearch() {
+    return this.toolbar.textSearch === true;
   },
 
   get supportsPrinting() {
@@ -1000,10 +1034,12 @@ const PDFViewerApplication = {
   _hideViewBookmark() {
     const { secondaryToolbar } = this.appConfig;
     // URL does not reflect proper document location - hiding some buttons.
-    secondaryToolbar?.viewBookmarkButton.classList.add("hidden");
+    secondaryToolbar?.viewBookmarkButton?.classList.add("hidden");
 
     // Avoid displaying multiple consecutive separators in the secondaryToolbar.
-    if (secondaryToolbar?.presentationModeButton.classList.contains("hidden")) {
+    if (
+      secondaryToolbar?.presentationModeButton?.classList.contains("hidden")
+    ) {
       document.getElementById("viewBookmarkSeparator")?.classList.add("hidden");
     }
   },
@@ -2398,7 +2434,7 @@ function onNamedAction(evt) {
       break;
 
     case "Find":
-      if (!this.supportsIntegratedFind) {
+      if (!this.supportsIntegratedFind && this.supportsTextSearch) {
         this.findBar?.toggle();
       }
       break;
@@ -2439,7 +2475,7 @@ function onUpdateViewarea({ location }) {
         // Unable to write to storage.
       });
   }
-  if (this.appConfig.secondaryToolbar) {
+  if (this.appConfig.secondaryToolbar.viewBookmarkButton) {
     this.appConfig.secondaryToolbar.viewBookmarkButton.href =
       this.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
   }
@@ -2465,6 +2501,15 @@ function onResize() {
   if (!pdfDocument) {
     return;
   }
+
+  if (this.findBar.opened) {
+    this.findBar.close();
+  }
+
+  if (this.secondaryToolbar.opened) {
+    this.secondaryToolbar.close();
+  }
+
   const currentScaleValue = pdfViewer.currentScaleValue;
   if (
     currentScaleValue === "auto" ||
@@ -2857,7 +2902,11 @@ function onKeyDown(evt) {
     // either CTRL or META key with optional SHIFT.
     switch (evt.keyCode) {
       case 70: // f
-        if (!this.supportsIntegratedFind && !evt.shiftKey) {
+        if (
+          !this.supportsIntegratedFind &&
+          !evt.shiftKey &&
+          this.supportsTextSearch
+        ) {
           this.findBar?.open();
           handled = true;
         }

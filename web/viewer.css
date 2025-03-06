@@ -31,7 +31,7 @@
   --editor-toolbar-base-offset: 105px;
 
   --main-color: rgb(12 12 13);
-  --main-font-size: 14px;
+  --main-font-size: 16px;
   --body-bg-color: rgb(255 255 255);
   --progressBar-color: rgb(10 132 255);
   --progressBar-bg-color: rgb(221 221 222);
@@ -60,7 +60,7 @@
   --toggled-btn-bg-color: var(--button-hover-color);
   --toggled-hover-active-btn-color: var(--button-hover-color);
   --toggled-hover-btn-outline: var(--button-hover-color);
-  --dropdown-btn-bg-color: rgb(215 215 219);
+  --dropdown-btn-bg-color: var(--body-bg-color);
   --dropdown-btn-border: none;
   --separator-color: rgb(0 0 0 / 0.3);
   --field-color: var(--main-color);
@@ -74,7 +74,7 @@
   --thumbnail-hover-color: rgb(9 174 152);
   --thumbnail-selected-color: rgb(34 55 72);
   --thumbnail-text-color: rgb(255 255 255);
-  --doorhanger-bg-color: rgb(255 255 255);
+  --doorhanger-bg-color: var(--toolbar-bg-color);
   --doorhanger-border-color: rgb(12 12 13 / 0.2);
   --doorhanger-hover-color: rgb(12 12 13);
   --doorhanger-hover-bg-color: rgb(237 237 237);
@@ -125,6 +125,7 @@ html.is-pdfapi {
   --main-color: rgb(34 55 72);
   --body-bg-color: rgb(234 246 244);
   --button-color: var(--main-color);
+  --dropdown-btn-bg-color: rgb(255 255 255);
   --thumbnail-bg-color: var(--main-color);
 }
 
@@ -550,6 +551,8 @@ body {
 
 #toolbarViewerLeft {
   padding-inline-start: 10px;
+  display: flex;
+  align-items: center;
 }
 
 #toolbarViewerMiddle {
@@ -619,8 +622,7 @@ body {
   opacity: 0.5;
 }
 
-.splitToolbarButton > .toolbarButton:is(:hover, :focus-visible),
-.dropdownToolbarButton:hover {
+.splitToolbarButton > .toolbarButton:is(:hover, :focus-visible) {
   background-color: var(--button-hover-color);
   color: var(--button-hover-text-color);
 }
@@ -688,7 +690,8 @@ body {
   display: inline-block;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
-  font:var(--fa-font-solid);
+  font: var(--fa-font-solid);
+  color: var(--button-color);
 }
 
 .dropdownToolbarButton::before {
@@ -718,7 +721,7 @@ body {
   color: var(--toggled-btn-color);
 }
 .dropdownToolbarButton > select > option {
-  background: var(--doorhanger-bg-color);
+  background: var(--dropdown-btn-bg-color);
   color: var(--main-color);
 }
 
@@ -752,6 +755,10 @@ body {
 
 #sidebarToggle::before {
   transform: scaleX(var(--dir-factor));
+}
+
+#secondaryToolbarToggle {
+  display: none;
 }
 
 #secondaryToolbarToggle::before {
@@ -819,6 +826,11 @@ body {
 
 .icon-upload::before {
   content: "\f093";
+}
+
+.icon-ellipsis::before {
+  content: "\f142";
+  margin-left: 2px;
 }
 
 .pdfSidebarNotification::after {
@@ -906,7 +918,14 @@ body {
   line-height: 14px;
   text-align: left;
   user-select: none;
-  cursor: default;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+
+  &:hover {
+    background-color: var(--toggled-btn-bg-color);
+    color: var(--toggled-btn-color);
+  }
 }
 
 #numPages.toolbarLabel {
@@ -1225,7 +1244,7 @@ dialog :link {
 }
 
 #secondaryToolbar {
-  background-color: var(--doorhanger-bg-color);
+  background-color: var(--toolbar-bg-color);
   cursor: default;
   font: message-box;
   font-size: 12px;
@@ -1233,105 +1252,21 @@ dialog :link {
   inset-inline-end: 4px;
   line-height: 14px;
   margin: 4px 2px;
-  padding: 6px 0 10px;
   position: absolute;
   text-align: left;
   top: var(--toolbar-height);
   z-index: 30000;
 
   :is(button, a) {
+    width: 100%;
+    margin: 0;
+    text-align: center;
     font: message-box;
     outline: none;
   }
 
   #secondaryToolbarButtonContainer {
-    margin-bottom: -4px;
     max-height: calc(var(--viewer-container-height) - 40px);
-    max-width: 220px;
-    min-height: 26px;
-    overflow-y: auto;
-
-    /*#if GENERIC*/
-    #secondaryOpenFile::before {
-      mask-image: var(--toolbarButton-openFile-icon);
-    }
-    /*#endif*/
-
-    #secondaryPrint::before {
-      mask-image: var(--toolbarButton-print-icon);
-    }
-
-    #secondaryDownload::before {
-      mask-image: var(--toolbarButton-download-icon);
-    }
-
-    #presentationMode::before {
-      mask-image: var(--toolbarButton-presentationMode-icon);
-    }
-
-    #viewBookmark::before {
-      mask-image: var(--toolbarButton-bookmark-icon);
-    }
-
-    #firstPage::before {
-      mask-image: var(--secondaryToolbarButton-firstPage-icon);
-    }
-
-    #lastPage::before {
-      mask-image: var(--secondaryToolbarButton-lastPage-icon);
-    }
-
-    #pageRotateCcw::before {
-      mask-image: var(--secondaryToolbarButton-rotateCcw-icon);
-    }
-
-    #pageRotateCw::before {
-      mask-image: var(--secondaryToolbarButton-rotateCw-icon);
-    }
-
-    #cursorSelectTool::before {
-      mask-image: var(--secondaryToolbarButton-selectTool-icon);
-    }
-
-    #cursorHandTool::before {
-      mask-image: var(--secondaryToolbarButton-handTool-icon);
-    }
-
-    #scrollPage::before {
-      mask-image: var(--secondaryToolbarButton-scrollPage-icon);
-    }
-
-    #scrollVertical::before {
-      mask-image: var(--secondaryToolbarButton-scrollVertical-icon);
-    }
-
-    #scrollHorizontal::before {
-      mask-image: var(--secondaryToolbarButton-scrollHorizontal-icon);
-    }
-
-    #scrollWrapped::before {
-      mask-image: var(--secondaryToolbarButton-scrollWrapped-icon);
-    }
-
-    #spreadNone::before {
-      mask-image: var(--secondaryToolbarButton-spreadNone-icon);
-    }
-
-    #spreadOdd::before {
-      mask-image: var(--secondaryToolbarButton-spreadOdd-icon);
-    }
-
-    #spreadEven::before {
-      mask-image: var(--secondaryToolbarButton-spreadEven-icon);
-    }
-
-    #imageAltTextSettings::before {
-      mask-image: var(--secondaryToolbarButton-imageAltTextSettings-icon);
-    }
-
-    #documentProperties::before {
-      mask-image: var(--secondaryToolbarButton-documentProperties-icon);
-    }
   }
 }
 
@@ -1555,6 +1490,9 @@ dialog :link {
   }
   #outerContainer:not(.sidebarOpen) #toolbarViewerMiddle {
     transform: translateX(0);
+  }
+  #secondaryToolbarToggle {
+    display: block;
   }
 }
 

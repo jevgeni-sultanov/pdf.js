@@ -60,6 +60,7 @@ class Toolbar {
   constructor(options, eventBus, toolbarDensity = 0) {
     this.#opts = options;
     this.eventBus = eventBus;
+    this.textSearch = true;
     this.printing = true;
     this.downloading = true;
     this.uploading = true;
