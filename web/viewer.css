@@ -564,10 +564,6 @@ body {
     border: 1px solid var(--field-border-color);
     border-radius: 2px;
     font-size: var(--main-font-size);
-
-    option {
-      font-size: var(--main-font-size);
-    }
   }
 }
 
@@ -708,7 +704,6 @@ body {
   width: inherit;
   min-width: inherit;
   height: 28px;
-  font-size: 12px;
   color: var(--main-color);
   margin: 0;
   padding-block: 1px 2px;

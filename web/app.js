@@ -182,6 +182,8 @@ const PDFViewerApplication = {
   _isCtrlKeyDown: false,
   _caretBrowsing: null,
   _isScrolling: false,
+  _smallScreenResolution: 560,
+  _maximumIconSize: 22,
 
   // Called once when the document is loaded.
   async initialize(appConfig) {
@@ -251,7 +253,12 @@ const PDFViewerApplication = {
       AppOptions.set("externalLinkTarget", LinkTarget.TOP);
     }
 
-    AppOptions.set("sidebarViewOnLoad", SidebarView.THUMBS);
+    if (window.innerWidth >= this._smallScreenResolution) {
+      AppOptions.set("sidebarViewOnLoad", SidebarView.THUMBS);
+    } else {
+      AppOptions.set("sidebarViewOnLoad", SidebarView.NONE);
+    }
+
     await this._initializeViewerComponents();
 
     // Bind the various event handlers *after* the viewer has been
@@ -838,6 +845,14 @@ const PDFViewerApplication = {
     document.documentElement.classList.add(themeClass);
   },
 
+  setIconSize(iconSize) {
+    if (iconSize <= this._maximumIconSize) {
+      const value = `${iconSize}px`;
+      this.appConfig.toolbar.pageNumber.style.fontSize = value;
+      this.appConfig.toolbar.scaleSelect.style.fontSize = value;
+    }
+  },
+
   setInitialScale(scaleValue) {
     this.pdfViewer.currentScaleValue = scaleValue;
   },
@@ -891,11 +906,13 @@ const PDFViewerApplication = {
   enableUploading() {
     this.toolbar.uploading = true;
     this.appConfig.toolbar?.upload?.classList.remove("hidden");
+    this.appConfig.secondaryToolbar?.uploadButton.classList.remove("hidden");
   },
 
   disableUploading() {
     this.toolbar.uploading = false;
     this.appConfig.toolbar?.upload?.classList.add("hidden");
+    this.appConfig.secondaryToolbar?.uploadButton.classList.add("hidden");
   },
 
   get pagesCount() {
